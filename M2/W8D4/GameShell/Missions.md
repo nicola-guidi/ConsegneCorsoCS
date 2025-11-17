@@ -12,26 +12,17 @@ Qui si tratta semplicemente di entrare nella cartella Castle/Main_tower fino a r
 ### Mission 2
 Qui lo scopo della missione è quello di tornare indietro fino alla directory Castle ed entrare nella directory Cellar. L'utilizzo del comando `cd ..` è fondamentale.
 
+![mission1](./Media/mission2.png)
 
 ### Mission 3
 Qui si torna nella directory iniziale con il comando `cd`, dopo di che ci si sposta utilizzando il path assoluto Castle/Main_building/Throne_room.
 
-**Soluzione**:
-```bash
-cd
-cd Castle/Main_building/Throne_room
-```
+![mission1](./Media/mission3.png)
 
 ### Mission 4
 In questo task ci spostiamo nella cartella World/Forest e creiamo una cartella chiamata Hut. Dopodiché entriamo nella cartella creata e ne creiamo un'altra chiamata Chest.
 
-**Soluzione**:
-```bash
-cd World/Forest
-mkdir Hut
-cd Hut
-mkdir Chest
-```
+![mission1](./Media/mission4.png)
 
 ### Mission 5
 In questo task ci spostiamo nella cartella World/Castle/Cellar ed eliminiamo tutti i file che iniziano con la parola spider.
