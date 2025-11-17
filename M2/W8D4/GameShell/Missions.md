@@ -27,192 +27,92 @@ In questo task ci spostiamo nella cartella World/Forest e creiamo una cartella c
 ### Mission 5
 In questo task ci spostiamo nella cartella World/Castle/Cellar ed eliminiamo tutti i file che iniziano con la parola spider.
 
-**Soluzione**:
-```bash
-cd World/Castle/Cellar
-rm spider*
-```
+![mission1](./Media/mission5.png)
 
 ### Mission 6
 Ci spostiamo nella cartella Garden e muoviamo con il comando `mv` tutti i file coin_* nella cartella Garden/Hut/Chest.
 
-**Soluzione**:
-```bash
-cd Garden
-mv coin_* Hut/Chest/
-```
+![mission1](./Media/mission6.png)
 
 ### Mission 7
 Stessa missione di prima ma in questo caso i coin fanno riferimento a file nascosti. Per vederli si deve utilizzare il comando `ls -la` all'interno della cartella Garden.
 
-**Soluzione**:
-```bash
-cd Garden
-ls -la
-mv .coin_* Hut/Chest/
-```
+![mission1](./Media/mission7.png)
 
 ### Mission 8
 Qui possiamo rimuovere tutti i file richiesti dalla cartella Castle/Cellar utilizzando il comando `rm *spider*`. In questo modo elimineremo i file che avranno la parola spider al centro del nome del file.
 
-**Soluzione**:
-```bash
-cd Castle/Cellar
-rm *spider*
-```
+![mission1](./Media/mission8.png)
 
 ### Mission 9
 Questo è come l'esercizio precedente ma i file spider sono nascosti. Si deve dire a `rm` di rimuovere i file che sono nascosti e che hanno la parola spider nel nome del file utilizzando il comando `rm .*spider*`.
 
-**Soluzione**:
-```bash
-rm .*spider*
-```
+![mission1](./Media/mission9.png)
 
-### Mission 10: Copiare File
+### Mission 10
 In questo esercizio dobbiamo copiare i file standard_* dalla cartella Castle/Great_hall nella cartella Forest/Hut/Chest.
 
-**Soluzione**:
-```bash
-cd Castle/Great_hall
-cp standard_* ../../Forest/Hut/Chest/
-```
+![mission1](./Media/mission10.png)
 
----
-
-### Mission 11: Pattern Tapestry
+### Mission 11
 Adesso il nostro obiettivo è quello di copiare tutti i file che hanno il pattern XXX_tapestry_XXX nel nostro forziere. Per fare questo possiamo utilizzare il comando `cp *tapestry* ../../Forest/Hut/Chest/`.
 
-**Soluzione**:
-```bash
-cp *tapestry* ../../Forest/Hut/Chest/
-```
+![mission1](./Media/mission11.png)
 
----
-
-### Mission 12: File Meno Recente
+### Mission 12
 In questo esercizio occorre listare i file con il comando `ls -l` per poter leggere la data di ultima modifica di ogni file. Poi si deve prendere il meno recente e spostarlo nel nostro forziere.
 
-**Soluzione**:
-```bash
-ls -l
-# Identificare il file meno recente
-mv <file_meno_recente> ../../Forest/Hut/Chest/
-```
+![mission1](./Media/mission12.png)
 
----
-
-## Utilità di Sistema
-
-### Mission 13: Calendario
+### Mission 13
 Con il comando `cal 2020` possiamo stampare a video il calendario di quell'anno e vedere che il giorno richiesto (19 ottobre 2020) era un lunedì.
 
-**Soluzione**:
-```bash
-cal 2020
-```
+![mission1](./Media/mission13.png)
 
----
-
-### Mission 14: Creare Alias
+### Mission 14
 In questo esercizio impareremo a creare un alias per il comando `ls -A`. Per poter creare un alias il comando è `alias la='ls -A'`.
 
-**Soluzione**:
-```bash
-alias la='ls -A'
-```
+![mission1](./Media/mission14.png)
 
----
-
-## Editor di Testo
-
-### Mission 15: Nano Editor
+### Mission 15
 Nano è uno degli editor di testo presenti in molte delle distribuzioni Linux. Usando nano dovremo creare un file chiamato journal.txt all'interno della cartella Forest/Hut/Chest che contenga del testo.
 
-**Soluzione**:
-```bash
-cd Forest/Hut/Chest
-nano journal.txt
-# Scrivere il testo
-# Ctrl+O per salvare, Ctrl+X per uscire
-```
+![mission1](./Media/mission15.png)
 
----
-
-### Mission 16: Alias per Journal
+### Mission 16
 Gli alias sono un modo comodo per evitare di ridigitare comandi lunghi ogni volta. Utilizzando il comando `alias journal='nano ~/Forest/Hut/Chest/journal.txt'` potremo creare un alias per accedere in modo molto più comodo all'editor di testo per poter modificare il file journal.txt.
 
-**Soluzione**:
-```bash
-alias journal='nano ~/Forest/Hut/Chest/journal.txt'
-```
+![mission1](./Media/mission16.png)
 
----
-
-## Tecniche Avanzate
-
-### Mission 17: Tab Completion
+### Mission 17
 Questa è una missione a tempo. Per poter risolvere l'esercizio è necessario utilizzare la Tab completion in modo da iniziare a scrivere soltanto la parte iniziale di una cartella o di un file e poi con il tasto tab fare in modo che il terminale finisca di scrivere in modo autonomo il nome del file o della cartella.
 
-**Soluzione**: Utilizzare il tasto Tab per auto-completare
+![mission1](./Media/mission17.png)
 
----
-
-### Mission 18: Background
+### Mission 18
 Qui il gioco ci insegna come aprire un programma in background mettendo il carattere `&` in fondo al nome di un qualsiasi programma. Es: `mousepad&`.
 
-**Soluzione**:
-```bash
-mousepad &
-```
+![mission1](./Media/mission18.png)
 
----
-
-### Mission 19: Concatenare Comandi
+### Mission 19
 In questo esercizio vediamo come il comando `&` posto in mezzo a due o più comandi ci permetta di concatenare più comandi insieme.
 
-**Soluzione**:
-```bash
-comando1 && comando2 && comando3
-```
+![mission1](./Media/mission19.png)
 
----
-
-### Missione 20: Parola Magica
+### Missione 20
 Qui ci si affida alla fortuna. La parola magica di 4 lettere da abbinare al comando charmiglio è `bash`.
 
-**Soluzione**:
-```bash
-charmiglio bash
-```
+![mission1](./Media/mission20.png)
 
----
-
-## Ricerca Avanzata
-
-### Missione 21: Navigazione Cieca
+### Missione 21
 In questa missione ci muoviamo alla cieca nel labirinto, cartella per cartella per trovare il file OOOOO_copper_coin_OOOOO e spostarlo nella cartella Forest/Hut/Chest/.
 
-**Soluzione**: Navigare manualmente attraverso le cartelle
-```bash
-# Una volta trovato il file
-mv OOOOO_copper_coin_OOOOO ~/Forest/Hut/Chest/
-```
+![mission1](./Media/mission21.png)
 
----
-
-### Missione 22: Comando Tree
+### Missione 22
 Il task è molto simile a quello precedente ma adesso abbiamo un'arma in più. Il comando `tree` ci mostra la struttura del file system dal punto in cui ci troviamo in basso. Questo ci semplifica la vita nel riuscire a trovare e spostare il file OOOOO_silver_coin_OOOOO nel nostro forziere.
 
-**Soluzione**:
-```bash
-tree
-# Identificare la posizione del file
-cd <percorso_corretto>
-mv OOOOO_silver_coin_OOOOO ~/Forest/Hut/Chest/
-```
-
----
+![mission1](./Media/mission22.png)
 
 ### Missione 23: Find Command
 Qui possiamo utilizzare `find` per trovare i gold coins. Servirà utilizzare il comando `find -iname *coin*` per fare in modo che la ricerca non sia case-sensitive e trovare i due file.
