@@ -37,6 +37,7 @@ Viene attivata quando vengono specificati:
 
 ```bash
 python3 brutus.py -i 192.168.1.10 -u admin -p admin123
+```
 
 ### 🔹 2. Attacco Dictionary / Cluster Bomb  
 *(Username list × Password list)*
