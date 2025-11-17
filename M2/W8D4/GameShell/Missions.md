@@ -4,32 +4,14 @@
 
 GameShell è un gioco educativo per imparare i comandi Linux attraverso missioni interattive. Questo documento riporta le soluzioni e gli apprendimenti delle 44 missioni completate.
 
----
-
-## Navigazione del File System
-
-### Mission 1: Raggiungere la Cima della Torre
+### Mission 1
 Qui si tratta semplicemente di entrare nella cartella Castle/Main_tower fino a raggiungere l'ultima sottocartella Top_of_the_tower.
 
-**Soluzione**:
-```bash
-cd Castle/Main_tower/Top_of_the_tower
-```
-
----
-
-### Mission 2: Tornare Indietro
+### Mission 2
 Qui lo scopo della missione è quello di tornare indietro fino alla directory Castle ed entrare nella directory Cellar. L'utilizzo del comando `cd ..` è fondamentale.
 
-**Soluzione**:
-```bash
-cd ../..
-cd Cellar
-```
 
----
-
-### Mission 3: Path Assoluto
+### Mission 3
 Qui si torna nella directory iniziale con il comando `cd`, dopo di che ci si sposta utilizzando il path assoluto Castle/Main_building/Throne_room.
 
 **Soluzione**:
@@ -38,11 +20,7 @@ cd
 cd Castle/Main_building/Throne_room
 ```
 
----
-
-## Gestione di Cartelle e File
-
-### Mission 4: Creare Cartelle
+### Mission 4
 In questo task ci spostiamo nella cartella World/Forest e creiamo una cartella chiamata Hut. Dopodiché entriamo nella cartella creata e ne creiamo un'altra chiamata Chest.
 
 **Soluzione**:
@@ -53,9 +31,7 @@ cd Hut
 mkdir Chest
 ```
 
----
-
-### Mission 5: Eliminare File
+### Mission 5
 In questo task ci spostiamo nella cartella World/Castle/Cellar ed eliminiamo tutti i file che iniziano con la parola spider.
 
 **Soluzione**:
@@ -64,9 +40,7 @@ cd World/Castle/Cellar
 rm spider*
 ```
 
----
-
-### Mission 6: Spostare File
+### Mission 6
 Ci spostiamo nella cartella Garden e muoviamo con il comando `mv` tutti i file coin_* nella cartella Garden/Hut/Chest.
 
 **Soluzione**:
@@ -75,9 +49,7 @@ cd Garden
 mv coin_* Hut/Chest/
 ```
 
----
-
-### Mission 7: File Nascosti
+### Mission 7
 Stessa missione di prima ma in questo caso i coin fanno riferimento a file nascosti. Per vederli si deve utilizzare il comando `ls -la` all'interno della cartella Garden.
 
 **Soluzione**:
@@ -87,9 +59,7 @@ ls -la
 mv .coin_* Hut/Chest/
 ```
 
----
-
-### Mission 8: Pattern con Spider
+### Mission 8
 Qui possiamo rimuovere tutti i file richiesti dalla cartella Castle/Cellar utilizzando il comando `rm *spider*`. In questo modo elimineremo i file che avranno la parola spider al centro del nome del file.
 
 **Soluzione**:
@@ -98,17 +68,13 @@ cd Castle/Cellar
 rm *spider*
 ```
 
----
-
-### Mission 9: File Nascosti con Spider
+### Mission 9
 Questo è come l'esercizio precedente ma i file spider sono nascosti. Si deve dire a `rm` di rimuovere i file che sono nascosti e che hanno la parola spider nel nome del file utilizzando il comando `rm .*spider*`.
 
 **Soluzione**:
 ```bash
 rm .*spider*
 ```
-
----
 
 ### Mission 10: Copiare File
 In questo esercizio dobbiamo copiare i file standard_* dalla cartella Castle/Great_hall nella cartella Forest/Hut/Chest.
