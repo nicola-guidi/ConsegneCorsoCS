@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# IMPORT DELLE LIBRERIE
+
 import asyncio
 import asyncssh
 import argparse
@@ -26,10 +28,13 @@ print('')
 print('--------------------------------------------------------------------------------------------------------------------------------------')
 print('')
 
+# ABBELLIRE IL MENU HELP
+
 class PrettyFormatter(argparse.HelpFormatter):
     def __init__(self, prog):
         super().__init__(prog, max_help_position=55, width=125)
         
+# VERIFICA IL FORMATO DELL'INDIRIZZO IP
 
 def check_ip_format(ip_string):
     try:
@@ -38,26 +43,32 @@ def check_ip_format(ip_string):
     except ValueError:
         raise argparse.ArgumentTypeError("Invalid IP address!")
 
+# VERIFICA CHE VENGA INSERITO UN NUMERO E CHE STIA TRA 1 E 65535
+
 def check_port_format(port_number):
     try:
         port = int(port_number)
     except ValueError:
         raise argparse.ArgumentTypeError("Port must be a number!")
-
     if not (1 <= port <= 65535):
         raise argparse.ArgumentTypeError("Port must be between 1 and 65535!")
     return port
+
+# VERIFICA CHE PRENDA UN FILE COME ARGOMENTO
 
 def check_file(file_path):
     if not os.path.isfile(file_path):
         raise argparse.ArgumentTypeError("Invalid file!")
     return file_path
 
+# VERIFICA CHE NON PRENDA UN FILE COME ARGOMENTO
+
 def check_string(value):
     if os.path.isfile(value):
         raise argparse.ArgumentTypeError("Invalid argument! Cannot be a file!")
     return value
 
+# ARGOMENTI CHE IL PROGRAMMA PRENDE IN INPUT DA CLI
                                                                
 def arguments():
 
@@ -72,6 +83,8 @@ def arguments():
 
     args = parser.parse_args()
 
+# ERROR HANDLING
+    
     if not args.host:
         print('\n[-] Please specify a target IP - usage: python3 brutus.py -i [TARGET IP] [OPTIONS]')
     elif not args.user and not args.users_list:
@@ -83,7 +96,7 @@ def arguments():
 
 args = arguments()
 
-# PASSWORD LIST FUNCTION
+# SE VIENE INSERITA UNA WORDLIST LE VARIE LINEE VENGONO PRESE ED AGGIUNTE ALLA LISTA PASSWORDS
 
 passwords=[]
 
@@ -104,7 +117,7 @@ def pass_list(passwords_list_path):
 if args.passwords_list:
     passwords = pass_list(args.passwords_list)
 
-# SINGLE PASSWORD FUNCTION
+# SE VIENE INSERITA UNA PASSWORD SINGOLA LA AGGIUNGE ALLA LISTA PASSWORD
 
 def single_pass(passwd):
     global passwords
@@ -114,7 +127,7 @@ def single_pass(passwd):
 if args.passwd:
     passwords = single_pass(args.passwd)
 
-# USERNAMES LIST FUNCTION
+# SE VIENE INSERITA UNA WORDLIST LE VARIE LINEE VENGONO PRESE ED AGGIUNTE ALLA LISTA USERNAMES
 
 usernames=[]
 
@@ -135,7 +148,7 @@ def user_list(users_list_path):
 if args.users_list:
     usernames = user_list(args.users_list)
 
-# SINGLE USERNAME FUNCTION
+# SE VIENE INSERITO UNO USERNAME SINGOLO LO AGGIUNGE ALLA LISTA USERNAMES
 
 def single_username(user):
     global usernames
@@ -145,7 +158,7 @@ def single_username(user):
 if args.user:
     usernames = single_username(args.user)
 
-# SSH CONNECTION LOOP
+# LOOP DI CONNESSIONE SSH
 
 async def ssh_login(host, port, passwords, usernames):
     for x in usernames: 
@@ -154,7 +167,7 @@ async def ssh_login(host, port, passwords, usernames):
                     async with asyncssh.connect(host=host, port=port, password=i, username=x) as conn:
                         if conn:
                             print('\033[92m[+] Testing password ' + '"' + i + '"' + ' for the user '  + '"' + x + '" - Valid password!\033[0m')
-                            if args.dont_stop:
+                            if args.dont_stop: # SE VIENE UTILIZZATO LO SWITCH --DONT-STOP IL PROGRAMMA CONTINUA ANCHE SE TROVA UNA COMBINAZIONE DI CREDENZIALI VALIDA
                                 continue
                             return True
                         elif not conn:
@@ -166,7 +179,9 @@ async def ssh_login(host, port, passwords, usernames):
                     print('[!] Connection failed. Check the target\'s IP/Port!')
                     return False
             continue
-    
+
+# USCITA PULITA SE IL PROGRAMMA VIENE INTERROTTO DALL'UTENTE
+
 try:
     asyncio.run(ssh_login(args.host, int(args.port), passwords, usernames))
 except KeyboardInterrupt:
