@@ -112,7 +112,8 @@ In questa missione ci muoviamo alla cieca nel labirinto, cartella per cartella p
 ### Missione 22
 Il task è molto simile a quello precedente ma adesso abbiamo un'arma in più. Il comando `tree` ci mostra la struttura del file system dal punto in cui ci troviamo in basso. Questo ci semplifica la vita nel riuscire a trovare e spostare il file OOOOO_silver_coin_OOOOO nel nostro forziere.
 
-![mission1](./Media/mission22.png)
+![mission1](./Media/mission22_1.png)
+![mission1](./Media/mission22_2.png)
 
 ### Missione 23
 Qui possiamo utilizzare `find` per trovare i gold coins. Servirà utilizzare il comando `find -iname *coin*` per fare in modo che la ricerca non sia case-sensitive e trovare i due file.
