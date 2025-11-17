@@ -94,14 +94,6 @@ python3 brutus.py -i 192.168.1.10 -U users.txt -P passwords.txt --dont-stop
 - `-P, --passlist` → File contenente lista di password  
 - `--dont-stop` → Non interrompe l’attacco se vengono trovate credenziali valide
 ```
-## Requisiti
-
-- Python **3.8+**
-- Modulo necessario:
-
-```bash
-pip install asyncssh
-```
 
 > ⚠️ **Attenzione**  
 > L’utilizzo di questo tool è consentito esclusivamente su sistemi per cui si dispone di esplicita autorizzazione.  
