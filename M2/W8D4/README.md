@@ -78,20 +78,20 @@ pip install asyncssh
 ```
 ## Esempi di utilizzo
 
-### - Username singolo + passlist
+### • Username singolo + passlist
 
 ```bash
 python3 brutus.py -i 192.168.1.10 -u root -P rockyou.txt
 ```
-### - Wordlist utenti + password singola (password spraying)
+### • Wordlist utenti + password singola (password spraying)
 ```bash
 python3 brutus.py -i 192.168.1.50 -U users.txt -p qwerty!
 ```
-### - Attacco cluster-bomb
+### • Attacco cluster-bomb
 ```bash
 python3 brutus.py -i 10.0.0.5 -U users.txt -P passwords.txt
 ```
-### - Continuare anche dopo credenziali valide
+### • Continuare anche dopo credenziali valide
 ```bash
 python3 brutus.py -i 192.168.1.10 -U u.txt -P p.txt --dont-stop
 ```
