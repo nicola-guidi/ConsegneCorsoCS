@@ -160,7 +160,8 @@ In questo task non basta il comando `kill` per interrompere l'incantesimo. Servi
 ### Mission 31
 In questo task un processo padre ha generato diversi processi figlio che a loro volta creavano dei file *_coal. Per prima cosa si è reso necessario identificare il PID del processo padre con il comando `ps`. Poi con il comando `pstree 196558 -p` abbiamo ottenuto i PID di tutti i processi figlio. Li abbiamo killati con il comando `kill` e poi abbiamo rimosso i file *_coal con il comando `rm`.
 
-![mission1](./Media/mission31.png)
+![mission1](./Media/mission31_1.png)
+![mission1](./Media/mission31_2.png)
 
 ### Mission 32
 Addizioni matematiche di base.
@@ -172,193 +173,60 @@ In questo esercizio dovremo fare in modo di fare eseguire i calcoli al file Math
 
 ![mission1](./Media/mission33.png)
 
-## Redirezione e Output
-
-### Mission 34: Output Redirection
+### Mission 34
 In questo esercizio dobbiamo creare un file inventory.txt che contenga la lista di libri dell'ufficio di Merlino. Per fare questo possiamo listare tutti i file che inizino con la parola grimoire e reindirizzare questa lista nel file inventory.txt nella cartella Drawer.
 
-**Soluzione**:
-```bash
-ls grimoire* > Drawer/inventory.txt
-```
+![mission1](./Media/mission34.png)
 
----
-
-### Mission 35: Grep con Flag
+### Mission 35
 In questo task dobbiamo elencare i file che hanno al loro interno la parola 'ghs' indipendentemente dal fatto che sia maiuscola o minuscola. Possiamo fare questo utilizzando il comando `grep` con i flag `-i` per dire che vogliamo una ricerca non case-sensitive e `-l` per fare stampare a video solo i nomi dei file e non il loro contenuto.
 
-**Soluzione**:
-```bash
-grep -il "ghs" *
-```
+![mission1](./Media/mission35.png)
 
----
-
-### Mission 36: STDOUT e STDERR
+### Mission 36
 In questa missione abbiamo analizzato l'output del programma merlin, reindirizzando sia STDOUT che STDERR per identificare informazioni nascoste. Il messaggio d'errore conteneva la chiave segreta (THESECRETKEYISONDSTDER), necessaria per completare con successo la missione.
 
-**Soluzione**:
-```bash
-./merlin 2> error.txt
-# Oppure
-./merlin 2>&1
-```
+![mission1](./Media/mission36.png)
 
----
-
-## Permessi
-
-### Mission 37: Chmod su Directory
+### Mission 37
 In questa missione dobbiamo usare `chmod` per cambiare i permessi di accesso alla cartella Kings_quarter. Con il comando `chmod 777 Kings_quarter` faremo in modo che chiunque (noi compresi) possa accedere con pieni permessi alla cartella.
 
-**Soluzione**:
-```bash
-chmod 777 Kings_quarter
-```
+![mission1](./Media/mission37.png)
 
----
-
-### Mission 38: Chmod su File Nascosto
+### Mission 38
 Stesso goal della missione prima. Però invece di dover cambiare i permessi ad una cartella dobbiamo cambiarli ad un file nascosto. In questo caso è stato utilizzato il comando `chmod +r .secret_note`.
 
-**Soluzione**:
-```bash
-chmod +r .secret_note
-```
+![mission1](./Media/mission38.png)
 
----
-
-### Mission 39: Accesso alla Corona
+### Mission 39
 Qui dobbiamo accedere alla cartella Safe nella sala del trono, per farlo dobbiamo cambiare i permessi in modo da poterci concedere l'accesso. Qui si trova la corona. Per poterla ispezionare e spostare nel nostro forziere dobbiamo anche qui modificarne i permessi. Fatto questo possiamo inserire i tre numeri presenti sulla corona e completare il task.
 
-**Soluzione**:
-```bash
-chmod +x Safe
-cd Safe
-chmod +r crown
-cat crown
-# Inserire i numeri trovati
-```
+![mission1](./Media/mission39.png)
 
----
-
-## Find Avanzato
-
-### Mission 40: Find per Tipo
+### Mission 40
 In questo esercizio ci viene richiesto di trovare un file contenente un rubino. Possiamo utilizzare `find` per cercare soltanto i file (e non le cartelle) nel labirinto. Il comando `find -type f` elenca una serie di file da ispezionare. Trovato quello che contiene il rubino sarà necessario spostarlo nel nostro forziere.
 
-**Soluzione**:
-```bash
-find -type f
-# Ispezionare i file trovati
-cat <file_con_rubino>
-mv <file_con_rubino> ~/Forest/Hut/Chest/
-```
+![mission1](./Media/mission40.png)
 
----
-
-### Mission 41: Find e Xargs
+### Mission 41
 Nella missione 41 abbiamo utilizzato `find` insieme a `xargs` per individuare il file che conteneva la parola "diamond" all'interno della struttura di directory. Dopo aver identificato il file corretto, lo abbiamo spostato nel percorso richiesto, completando con successo la missione.
 
-**Soluzione**:
-```bash
-find -type f | xargs grep "diamond"
-# Una volta identificato il file
-mv <file_con_diamond> ~/Forest/Hut/Chest/
-```
+![mission1](./Media/mission41.png)
 
----
-
-## Grep Avanzato
-
-### Mission 42: Grep Inverso
+### Mission 42
 In questa missione dobbiamo capire a quanto ammonta il debito del re. Per prima cosa dobbiamo escludere i file che non ci servono con il comando `grep -v` che fa una ricerca inversa, escludendo i file che contengono nel nome un pattern che non ci interessa. Dopo di che viene restituito un unico file dove se cerchiamo le righe al suo interno che contengono il pattern "the king" ed escludiamo, sempre con `grep -v` la parola "PAID" riusciamo a scoprire cosa ha comprato il re e cosa non è ancora stato pagato.
 
-**Soluzione**:
-```bash
-ls | grep -v <pattern_da_escludere>
-cat <file_risultante> | grep "the king" | grep -v "PAID"
-```
+![mission1](./Media/mission42.png)
 
----
-
-### Mission 43: Contare con WC
+### Mission 43
 Adesso dobbiamo fare la stessa cosa ma capire quanti oggetti non sono ancora stati pagati. Qui dobbiamo concatenare alcuni comandi. Inizialmente si escludono i file che contengono la parola boring nel titolo. Dopo di che, nel file che ci viene restituito, escludiamo le righe che hanno la parola "PAID". Fatto questo utilizziamo `wc` per contare le righe dell'output del comando precedente.
 
-**Soluzione**:
-```bash
-ls | grep -v boring | xargs grep -v "PAID" | wc
-```
+![mission1](./Media/mission43.png)
 
----
-
-## Crittografia
-
-### Mission 44: Caesar Cipher
+### Mission 44
 In questa ultima missione dobbiamo decifrare il messaggio di Merlino. È criptato con un Caesar cipher e dobbiamo capire il numero di ROT. Siamo riusciti a decifrare il messaggio con il comando `cat ~/Castle/Main_building/Library/Merlin_s_office/Drawer/secret_message | tr "a-z" "o-za-n"`. Questo ci rivelerà la chiave per il forziere di Merlino e concluderà il gioco.
 
-**Soluzione**:
-```bash
-cat ~/Castle/Main_building/Library/Merlin_s_office/Drawer/secret_message | tr "a-z" "o-za-n"
-```
-
----
-
-## Riepilogo Comandi Appresi
-
-### Navigazione
-- `cd` - Cambiare directory
-- `cd ..` - Salire di un livello
-- `cd` o `cd ~` - Tornare alla home
-
-### File e Directory
-- `ls` - Elencare file
-- `ls -l` - Lista dettagliata con date
-- `ls -la` - Lista con file nascosti
-- `mkdir` - Creare directory
-- `rm` - Rimuovere file
-- `mv` - Spostare/rinominare file
-- `cp` - Copiare file
-
-### Ricerca
-- `find -iname` - Ricerca case-insensitive
-- `find -type f` - Cercare solo file
-- `tree` - Visualizzare struttura directory
-- `grep` - Cercare pattern nei file
-- `grep -i` - Ricerca case-insensitive
-- `grep -l` - Mostrare solo nomi file
-- `grep -v` - Ricerca inversa (escludere)
-
-### Manipolazione Testo
-- `cat` - Visualizzare/concatenare file
-- `head -n` - Prime N righe
-- `tail -n` - Ultime N righe
-- `tr` - Tradurre/sostituire caratteri
-- `wc` - Contare righe/parole/caratteri
-
-### Processi
-- `ps` - Elencare processi
-- `pstree -p` - Albero processi con PID
-- `kill` - Terminare processo
-- `kill -1` - Terminare con segnale SIGHUP
-
-### Sistema
-- `cal` - Calendario
-- `alias` - Creare scorciatoie
-- `nano` - Editor di testo
-- `chmod` - Cambiare permessi
-- `xargs` - Costruire ed eseguire comandi
-
-### Operatori
-- `*` - Wildcard
-- `&` - Esecuzione in background
-- `&&` - Concatenazione comandi
-- `|` - Pipe (reindirizzamento output)
-- `<` - Input redirection
-- `>` - Output redirection
-- `2>` - Redirezione STDERR
-
----
+![mission1](./Media/mission44.png)
 
 ## Conclusioni
 
