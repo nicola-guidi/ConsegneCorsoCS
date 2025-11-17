@@ -7,6 +7,7 @@ L’obiettivo è fornire un metodo semplice e controllato per verificare la robu
 
 Brutus.py riconosce automaticamente la modalità di attacco in base ai parametri forniti. Le modalità implementate sono le seguenti:
 
+![gif_example](./Media/poc.gif)
 
 ### 1. Credenziali singole  
 La modalità più semplice: viene effettuato un solo tentativo.
