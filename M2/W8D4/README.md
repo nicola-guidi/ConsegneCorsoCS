@@ -54,3 +54,48 @@ Lo script necessita di:
 
 ```bash
 pip install asyncssh
+
+Per l’esecuzione è sufficiente lanciare il comando:
+
+python3 brutus.py -i <IP> [opzioni]
+
+Esempi di utilizzo
+
+Test con credenziali singole:
+
+python3 brutus.py -i 192.168.1.10 -u admin -p admin123
+
+
+Utilizzo di due wordlist:
+
+python3 brutus.py -i 10.0.0.5 -U users.txt -P passwords.txt
+
+
+Continuare anche dopo aver trovato una password valida:
+
+python3 brutus.py -i 192.168.1.10 -u root -P rockyou.txt --dont-stop
+
+Opzioni disponibili
+
+-i — indirizzo IP target
+
+-s — porta SSH (default: 22)
+
+-u — username singolo
+
+-p — password singola
+
+-U — lista di username
+
+-P — lista di password
+
+--dont-stop — continua l’attacco anche dopo credenziali valide
+
+Per visualizzare l’help completo:
+
+python3 brutus.py -h
+
+Conclusione
+
+Brutus.py nasce come un progetto semplice ma ben strutturato, pensato per simulare tentativi di autenticazione in modo controllato e verificare la solidità delle configurazioni SSH.
+L’attenzione dedicata alla gestione degli errori e alla validazione dell’input permette allo script di essere affidabile, comprensibile e sicuro da utilizzare in contesti di testing autorizzato.
