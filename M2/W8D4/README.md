@@ -56,7 +56,7 @@ In questo caso Brutus.py costruisce automaticamente tutte le combinazioni possib
 
 ```bash
 python3 brutus.py -i 10.0.0.5 -U users.txt -P passwords.txt
-
+```
 ### 🔹 3. Password Spraying Attack  
 *(Una password testata su molti utenti)*
 
@@ -72,7 +72,7 @@ La modalità si attiva quando vengono specificati:
 
 ```bash
 python3 brutus.py -i 192.168.1.20 -U users.txt -p Winter2024!
-
+```
 ## 🛡️ Gestione degli errori e validazione degli input
 
 Il programma include un sistema di validazione progettato per intercettare errori prima dell’esecuzione.  
@@ -99,32 +99,33 @@ Gli errori vengono comunicati in modo chiaro e senza interrompere bruscamente l�
 
 ```bash
 pip install asyncssh
-
+```
 ## 🧪 Esempi di utilizzo
 
 ### 🔹 Username singolo + passlist
 
 ```bash
 python3 brutus.py -i 192.168.1.10 -u root -P rockyou.txt
-
+```
 ### 🔹 Wordlist utenti + password singola (password spraying)
-
+```bash
 python3 brutus.py -i 192.168.1.50 -U users.txt -p qwerty!
-
+```
 ### 🔹 Attacco cluster-bomb
-
+```bash
 python3 brutus.py -i 10.0.0.5 -U users.txt -P passwords.txt
-
- ### 🔹 Continuare anche dopo credenziali valide
-
+```
+### 🔹 Continuare anche dopo credenziali valide
+```bash
 python3 brutus.py -i 192.168.1.10 -U u.txt -P p.txt --dont-stop
-
+```
 ## ⚙️ Opzioni disponibili
-
+```bash
 - `-i, --ip` → Indirizzo IP target  
 - `-s, --service` → Porta SSH (default: 22)  
 - `-u, --username` → Username singolo  
 - `-p, --password` → Password singola  
 - `-U, --userlist` → File contenente lista di username  
 - `-P, --passlist` → File contenente lista di password  
-- `--dont-stop` → Non interrompe l’attacco se vengono trovate credenziali valide  
+- `--dont-stop` → Non interrompe l’attacco se vengono trovate credenziali valide
+```
