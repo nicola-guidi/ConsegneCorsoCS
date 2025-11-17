@@ -1,101 +1,129 @@
 # Brutus.py
 
-Brutus.py è uno strumento pensato per il testing di sicurezza di servizi SSH.  
-Il suo scopo è permettere di verificare in modo rapido e controllato la robustezza delle credenziali di accesso, attraverso tentativi mirati o combinazioni generate automaticamente da apposite liste. L’idea alla base del progetto è fornire uno strumento sia semplice da usare sia sufficientemente flessibile per scenari più ampi di audit e penetration testing autorizzato.
+Brutus.py è uno strumento progettato per testare la sicurezza dei servizi SSH attraverso diverse modalità di attacco basate su combinazioni di username e password.  
+Il programma permette sia l’utilizzo diretto di credenziali singole, sia l’impiego di wordlist per generare automaticamente tutte le combinazioni possibili.  
+L’obiettivo è fornire un metodo semplice e controllato per verificare la robustezza di un servizio SSH in un contesto autorizzato.
 
 > ⚠️ **Attenzione**  
-> Questo script deve essere utilizzato esclusivamente in contesti autorizzati.  
-> Qualsiasi tentativo di accesso non autorizzato a sistemi remoti è illegale.  
-> L’autore declina ogni responsabilità per usi impropri dello strumento.
+> L’utilizzo di questo tool è consentito esclusivamente su sistemi per cui si dispone di esplicita autorizzazione.  
+> L’autore non è responsabile per eventuali usi impropri o illegali.
 
 ---
 
 ## Funzionamento generale
 
-Brutus.py permette di tentare l’accesso SSH combinando username e password forniti manualmente o tramite wordlist.  
-Il programma supporta sia l’utilizzo singolo (un solo utente e una sola password), sia modalità più estese in cui ogni username viene testato contro ogni password, generando automaticamente tutte le combinazioni possibili.
-
-L’esecuzione sfrutta `asyncio` e `asyncssh`, permettendo un flusso di tentativi fluido, reattivo e privo di blocchi.  
-Se viene individuata una combinazione valida, questa viene evidenziata immediatamente, con la possibilità di proseguire o interrompere l’esecuzione in base ai parametri scelti dall’utente.
+Brutus.py utilizza `asyncio` e `asyncssh` per gestire i tentativi di autenticazione in modalità asincrona, rendendo l’esecuzione fluida anche quando vengono testate molte credenziali.  
+In base agli input forniti, il programma può eseguire attacchi mirati, attacchi basati su wordlist o tentativi distribuiti su più utenti.
 
 ---
 
-## Gestione degli errori e validazione degli input
+## Modalità di attacco supportate
 
-Uno degli aspetti su cui è stata posta particolare attenzione durante lo sviluppo è la **corretta validazione degli input** e la gestione degli errori generati da formati non corretti.
-
-Brutus.py effettua infatti controlli preventivi su:
-
-- **Formato dell’indirizzo IP**  
-  Utilizza il modulo `ipaddress` per verificare che l’IP fornito sia valido.
-
-- **Porta del servizio SSH**  
-  Controlla che il valore sia numerico e compreso tra 1 e 65535.
-
-- **Esistenza effettiva dei file**  
-  I percorsi forniti come userlist e passlist vengono verificati prima dell’avvio, e in caso di file inesistenti il programma interrompe l’esecuzione mostrando un messaggio chiaro.
-
-- **Distinzione tra stringhe e file**  
-  Lo script impedisce che valori destinati a username/password vengano scambiati per un percorso di file e viceversa.
-
-- **Gestione delle eccezioni di rete e autenticazione**  
-  Qualunque errore di connessione, timeout, permesso negato o problema interno di `asyncssh` viene catturato e gestito in modo sicuro, evitando crash dello script.
-
-Questi controlli garantiscono un’esecuzione stabile e riducono sensibilmente la possibilità di input errati o comportamenti inattesi.
+Brutus.py riconosce automaticamente la modalità di attacco in base ai parametri forniti. Le modalità implementate sono le seguenti:
 
 ---
 
-## Requisiti e installazione
+### 🔹 1. Credenziali singole  
+*(Single Username + Single Password)*
 
-Lo script necessita di:
+La modalità più semplice: viene effettuato un solo tentativo.
 
-- Python 3.8 o versioni successive
-- La libreria `asyncssh`, installabile tramite:
+Viene attivata quando vengono specificati:
+
+- `-u <username>`
+- `-p <password>`
+
+**Esempio:**
+
+```bash
+python3 brutus.py -i 192.168.1.10 -u admin -p admin123
+
+### 🔹 2. Attacco Dictionary / Cluster Bomb  
+*(Username list × Password list)*
+
+Questa modalità esegue un attacco completo combinando **ogni username** con **ogni password**.  
+È la modalità più efficace quando si vogliono testare molte credenziali.
+
+Si attiva quando vengono fornite wordlist tramite:
+
+- `-U <file>` — lista username  
+- `-P <file>` — lista password  
+
+In questo caso Brutus.py costruisce automaticamente tutte le combinazioni possibili.
+
+**Esempio:**
+
+```bash
+python3 brutus.py -i 10.0.0.5 -U users.txt -P passwords.txt
+
+### 🔹 3. Password Spraying Attack  
+*(Una password testata su molti utenti)*
+
+In questa modalità viene utilizzata **una singola password** per tutti gli username presenti nella wordlist.  
+È utile quando si vogliono evitare lock-out dovuti a troppi tentativi falliti sullo stesso utente.
+
+La modalità si attiva quando vengono specificati:
+
+- `-U <file>` — lista di username  
+- `-p <password>` — password singola
+
+**Esempio:**
+
+```bash
+python3 brutus.py -i 192.168.1.20 -U users.txt -p Winter2024!
+
+## 🛡️ Gestione degli errori e validazione degli input
+
+Il programma include un sistema di validazione progettato per intercettare errori prima dell’esecuzione.  
+In particolare vengono gestiti:
+
+- **Validità dell’indirizzo IP**, tramite il modulo `ipaddress`
+- **Validità della porta**, che deve essere numerica e compresa tra **1 e 65535**
+- **Esistenza dei file** (per userlist e passlist)
+- **Prevenzione della confusione tra file e stringhe**, evitando interpretazioni errate
+- **Gestione delle eccezioni di rete e autenticazione**
+  - timeout  
+  - permission denied  
+  - errori `asyncssh`  
+  - problemi di connessione  
+
+Gli errori vengono comunicati in modo chiaro e senza interrompere bruscamente l’esecuzione.
+
+---
+
+## 📦 Requisiti
+
+- Python **3.8+**
+- Modulo necessario:
 
 ```bash
 pip install asyncssh
 
-Per l’esecuzione è sufficiente lanciare il comando:
+## 🧪 Esempi di utilizzo
 
-python3 brutus.py -i <IP> [opzioni]
+### 🔹 Username singolo + passlist
 
-Esempi di utilizzo
+```bash
+python3 brutus.py -i 192.168.1.10 -u root -P rockyou.txt
 
-Test con credenziali singole:
+### 🔹 Wordlist utenti + password singola (password spraying)
 
-python3 brutus.py -i 192.168.1.10 -u admin -p admin123
+python3 brutus.py -i 192.168.1.50 -U users.txt -p qwerty!
 
-
-Utilizzo di due wordlist:
+### 🔹 Attacco cluster-bomb
 
 python3 brutus.py -i 10.0.0.5 -U users.txt -P passwords.txt
 
+ ### 🔹 Continuare anche dopo credenziali valide
 
-Continuare anche dopo aver trovato una password valida:
+python3 brutus.py -i 192.168.1.10 -U u.txt -P p.txt --dont-stop
 
-python3 brutus.py -i 192.168.1.10 -u root -P rockyou.txt --dont-stop
+## ⚙️ Opzioni disponibili
 
-Opzioni disponibili
-
--i — indirizzo IP target
-
--s — porta SSH (default: 22)
-
--u — username singolo
-
--p — password singola
-
--U — lista di username
-
--P — lista di password
-
---dont-stop — continua l’attacco anche dopo credenziali valide
-
-Per visualizzare l’help completo:
-
-python3 brutus.py -h
-
-Conclusione
-
-Brutus.py nasce come un progetto semplice ma ben strutturato, pensato per simulare tentativi di autenticazione in modo controllato e verificare la solidità delle configurazioni SSH.
-L’attenzione dedicata alla gestione degli errori e alla validazione dell’input permette allo script di essere affidabile, comprensibile e sicuro da utilizzare in contesti di testing autorizzato.
+- `-i, --ip` → Indirizzo IP target  
+- `-s, --service` → Porta SSH (default: 22)  
+- `-u, --username` → Username singolo  
+- `-p, --password` → Password singola  
+- `-U, --userlist` → File contenente lista di username  
+- `-P, --passlist` → File contenente lista di password  
+- `--dont-stop` → Non interrompe l’attacco se vengono trovate credenziali valide  
