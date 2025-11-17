@@ -164,7 +164,7 @@ async def ssh_login(host, port, passwords, usernames):
     for x in usernames: 
             for i in passwords:
                 try:
-                    async with asyncssh.connect(host=host, port=port, password=i, username=x) as conn:
+                    async with await asyncio.wait_for(asyncssh.connect(host=host, port=port, password=i, username=x), timeout=10) as conn:
                         if conn:
                             print('\033[92m[+] Testing password ' + '"' + i + '"' + ' for the user '  + '"' + x + '" - Valid password!\033[0m')
                             if args.dont_stop: # SE VIENE UTILIZZATO LO SWITCH --DONT-STOP IL PROGRAMMA CONTINUA ANCHE SE TROVA UNA COMBINAZIONE DI CREDENZIALI VALIDA
@@ -175,8 +175,11 @@ async def ssh_login(host, port, passwords, usernames):
                 except (asyncssh.ProcessError, asyncssh.PermissionDenied):
                     print('[-] Testing password ' + '"' + i + '"' + ' for the user '  + '"' + x + '" - Invalid password!')
                     continue
+                except asyncio.TimeoutError:
+                    print('[!] Connection timeout! The provided IP could be not valid or the port could be closed!')
+                    continue
                 except (OSError, asyncssh.Error) as e:
-                    print('[!] Connection failed. Check the target\'s IP/Port!')
+                    print('[!] Connection failed. Check the target\'s IP/Port!') # IL PROGRAMMA SI INTERROMPE IN CONNECTION TIMEOUT
                     return False
             continue
 
@@ -186,7 +189,3 @@ try:
     asyncio.run(ssh_login(args.host, int(args.port), passwords, usernames))
 except KeyboardInterrupt:
     print(' - [!] Stopped by the user! Goodbye!')
-
-
-
-
