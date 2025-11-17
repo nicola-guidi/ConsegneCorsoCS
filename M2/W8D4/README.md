@@ -9,11 +9,9 @@ Brutus.py riconosce automaticamente la modalità di attacco in base ai parametri
 
 
 ### 1. Credenziali singole  
-*(Single Username + Single Password)*
-
 La modalità più semplice: viene effettuato un solo tentativo.
 
-Viene attivata quando vengono specificati:
+Viene attivata quando vengono specificati uno username e una password:
 
 - `-u <username>`
 - `-p <password>`
@@ -40,10 +38,9 @@ In questo caso Brutus.py costruisce automaticamente tutte le combinazioni possib
 **Esempio:**
 
 ```bash
-python3 brutus.py -i 10.0.0.5 -U users.txt -P passwords.txt
+python3 brutus.py -i 192.168.1.10 -U users.txt -P passwords.txt
 ```
 ### 3. Password Spraying Attack  
-*(Una password testata su molti utenti)*
 
 In questa modalità viene utilizzata **una singola password** per tutti gli username presenti nella wordlist.  
 È utile quando si vogliono evitare lock-out dovuti a troppi tentativi falliti sullo stesso utente.
@@ -56,7 +53,7 @@ La modalità si attiva quando vengono specificati:
 **Esempio:**
 
 ```bash
-python3 brutus.py -i 192.168.1.20 -U users.txt -p Winter2024!
+python3 brutus.py -i 192.168.1.20 -U users.txt -p admin123
 ```
 ## Gestione degli errori e validazione degli input
 
@@ -73,19 +70,19 @@ In particolare vengono gestiti:
 ### • Username singolo + passlist
 
 ```bash
-python3 brutus.py -i 192.168.1.10 -u root -P rockyou.txt
+python3 brutus.py -i 192.168.1.10 -u admin -P passwords.txt
 ```
 ### • Wordlist utenti + password singola (password spraying)
 ```bash
-python3 brutus.py -i 192.168.1.50 -U users.txt -p qwerty!
+python3 brutus.py -i 192.168.1.10 -U users.txt -p admin123
 ```
 ### • Attacco cluster-bomb
 ```bash
-python3 brutus.py -i 10.0.0.5 -U users.txt -P passwords.txt
+python3 brutus.py -i 192.168.1.10 -U users.txt -P passwords.txt
 ```
 ### • Continuare anche dopo credenziali valide
 ```bash
-python3 brutus.py -i 192.168.1.10 -U u.txt -P p.txt --dont-stop
+python3 brutus.py -i 192.168.1.10 -U users.txt -P passwords.txt --dont-stop
 ```
 ## Opzioni disponibili
 ```bash
