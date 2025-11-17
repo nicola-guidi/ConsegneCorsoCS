@@ -85,7 +85,6 @@ python3 brutus.py -i 192.168.1.10 -U users.txt -P passwords.txt
 python3 brutus.py -i 192.168.1.10 -U users.txt -P passwords.txt --dont-stop
 ```
 ## Opzioni disponibili
-```bash
 - `-i, --ip` → Indirizzo IP target  
 - `-s, --service` → Porta SSH (default: 22)  
 - `-u, --username` → Username singolo  
@@ -93,7 +92,6 @@ python3 brutus.py -i 192.168.1.10 -U users.txt -P passwords.txt --dont-stop
 - `-U, --userlist` → File contenente lista di username  
 - `-P, --passlist` → File contenente lista di password  
 - `--dont-stop` → Non interrompe l’attacco se vengono trovate credenziali valide
-```
 
 > ⚠️ **Attenzione**  
 > L’utilizzo di questo tool è consentito esclusivamente su sistemi per cui si dispone di esplicita autorizzazione.  
