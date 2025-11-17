@@ -7,6 +7,8 @@ GameShell è un gioco educativo per imparare i comandi Linux attraverso missioni
 ### Mission 1
 Qui si tratta semplicemente di entrare nella cartella Castle/Main_tower fino a raggiungere l'ultima sottocartella Top_of_the_tower.
 
+![](../Media/mission1.png)
+
 ### Mission 2
 Qui lo scopo della missione è quello di tornare indietro fino alla directory Castle ed entrare nella directory Cellar. L'utilizzo del comando `cd ..` è fondamentale.
 
