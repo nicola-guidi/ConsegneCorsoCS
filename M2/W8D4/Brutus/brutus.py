@@ -176,10 +176,10 @@ async def ssh_login(host, port, passwords, usernames):
                     print('[-] Testing password ' + '"' + i + '"' + ' for the user '  + '"' + x + '" - Invalid password!')
                     continue
                 except asyncio.TimeoutError:
-                    print('[!] Connection timeout! Check the target\'s IP/Port!')
+                    print('[!] Connection timeout! Check the target\'s IP/Port!') # IL PROGRAMMA SI INTERROMPE IN CONNECTION TIMEOUT
                     continue
                 except (OSError, asyncssh.Error) as e:
-                    print('[!] Connection failed. Check the target\'s IP/Port!') # IL PROGRAMMA SI INTERROMPE IN CONNECTION TIMEOUT
+                    print('[!] Connection failed. Check the target\'s IP/Port!')
                     return False
             continue
 
