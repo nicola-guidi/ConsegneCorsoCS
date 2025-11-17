@@ -114,126 +114,62 @@ Il task è molto simile a quello precedente ma adesso abbiamo un'arma in più. I
 
 ![mission1](./Media/mission22.png)
 
-### Missione 23: Find Command
+### Missione 23
 Qui possiamo utilizzare `find` per trovare i gold coins. Servirà utilizzare il comando `find -iname *coin*` per fare in modo che la ricerca non sia case-sensitive e trovare i due file.
 
-**Soluzione**:
-```bash
-find -iname "*coin*"
-```
+![mission1](./Media/mission23.png)
 
----
-
-## Manipolazione di Testi
-
-### Mission 24: Head Command
+### Mission 24
 Per completare la missione dobbiamo per prima cosa trovare la pagina che contiene la ricetta dell'Herbal tea. Trovata la pagina dobbiamo tornare sopra di un livello nel file system nella cartella Cave (dove si trova Servillus). Per mostrare solo la parte del file che contiene la ricetta dell'Herbal tea dobbiamo utilizzare il comando `head -n 6 page_07`. Head mostra solo la parte iniziale di un file di testo (le prime 10 righe). Per specificare quante righe mostrare dobbiamo utilizzare il flag `-n` seguito dal numero di righe delle quali abbiamo bisogno.
 
-**Soluzione**:
-```bash
-cd Cave
-head -n 6 Book_of_potions/page_07
-```
+![mission1](./Media/mission24.png)
 
----
-
-### Mission 25: Tail Command
+### Mission 25
 Missione simile alla precedente ma in questo caso si devono mostrare solo le ultime righe di un file. Nello specifico del file page_12. Possiamo eseguire il comando `tail -n 9 Book_of_potions/page_12` per completare la missione con successo.
 
-**Soluzione**:
-```bash
-tail -n 9 Book_of_potions/page_12
-```
+![mission1](./Media/mission25.png)
 
----
-
-### Mission 26: Concatenare File
+### Mission 26
 Per completare questa missione è necessario utilizzare il comando `cat` specificando i due file da leggere (page_01 e page_02) in modo che vengano stampati a schermo in un solo output. Il comando da utilizzare è `cat Book_of_potions/page_01 Book_of_potions/page_02`.
 
-**Soluzione**:
-```bash
-cat Book_of_potions/page_01 Book_of_potions/page_02
-```
+![mission1](./Media/mission26.png)
 
----
-
-### Mission 27: Cat e Tail con Pipe
+### Mission 27
 Per riuscire a mostrare soltanto le 16 righe della ricetta richiesta dal task dobbiamo utilizzare una combinazione del comando `cat` e del comando `tail`. Utilizziamo il comando `cat` per mostrare l'intero contenuto della ricetta (page_03 e page_04). Reindirizzeremo quindi l'output di `cat` utilizzando la pipe (`|`) per fare in modo che venga preso in input dal comando `tail`, che con il flag `-n 16` restituirà solo ed esclusivamente le righe che ci servono.
 
-**Soluzione**:
-```bash
-cat Book_of_potions/page_03 Book_of_potions/page_04 | tail -n 16
-```
+![mission1](./Media/mission27.png)
 
----
-
-### Mission 28: Head e Tail Combinati
+### Mission 28
 In questo esercizio dovremo stampare esclusivamente le tre righe della ricetta richiesta che si trovano al centro del file. Dovremo usare una combinazione di `head` (per settare il limite superiore delle righe che vogliamo mostrare) insieme a `tail` per eliminare dall'output le righe iniziali che non ci servono. Il comando sarà quindi `head -n 6 Book_of_potions/page_13 | tail -n 3`.
 
 **Spiegazione**: `head -n 6` prende le prime 6 righe del file, poi `tail -n 3` estrae le ultime 3 di queste 6 righe, ottenendo così le righe 4, 5 e 6 del file originale.
 
-**Soluzione**:
-```bash
-head -n 6 Book_of_potions/page_13 | tail -n 3
-```
+![mission1](./Media/mission28.png)
 
----
-
-## Gestione Processi
-
-### Mission 29: Kill Process
+### Mission 29
 In questo task dobbiamo identificare e killare l'incantesimo (processo) che fa piovere carbone all'interno del castello. Possiamo fare ciò con il comando `ps` per elencare i processi, identificare il PID dell'incantesimo e killarlo con il comando `kill` seguito dal process identifier relativo.
 
-**Soluzione**:
-```bash
-ps
-# Identificare il PID
-kill <PID>
-```
+![mission1](./Media/mission29.png)
 
----
-
-### Mission 30: Kill con Segnali
+### Mission 30
 In questo task non basta il comando `kill` per interrompere l'incantesimo. Servirà anche specificare un tipo di segnale per fare in modo che il processo si fermi. Il comando `kill -1 195220` ha funzionato ed ha spezzato l'incantesimo.
 
-**Soluzione**:
-```bash
-kill -1 <PID>
-```
+![mission1](./Media/mission30.png)
 
----
-
-### Mission 31: Process Tree
+### Mission 31
 In questo task un processo padre ha generato diversi processi figlio che a loro volta creavano dei file *_coal. Per prima cosa si è reso necessario identificare il PID del processo padre con il comando `ps`. Poi con il comando `pstree 196558 -p` abbiamo ottenuto i PID di tutti i processi figlio. Li abbiamo killati con il comando `kill` e poi abbiamo rimosso i file *_coal con il comando `rm`.
 
-**Soluzione**:
-```bash
-ps
-pstree <PID_padre> -p
-# Killare i processi figlio
-kill <PID_figlio1> <PID_figlio2> ...
-kill <PID_padre>
-rm *_coal
-```
+![mission1](./Media/mission31.png)
 
----
-
-## Calcoli
-
-### Mission 32: Addizioni Matematiche
+### Mission 32
 Addizioni matematiche di base.
 
----
+![mission1](./Media/mission32.png)
 
-### Mission 33: Input Redirection
+### Mission 33
 In questo esercizio dovremo fare in modo di fare eseguire i calcoli al file Mathematics_101. Per fare questo dobbiamo utilizzare il comando `gsh check < Mathematics_101`.
 
-**Soluzione**:
-```bash
-gsh check < Mathematics_101
-```
-
----
+![mission1](./Media/mission33.png)
 
 ## Redirezione e Output
 
