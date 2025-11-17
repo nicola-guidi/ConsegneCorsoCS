@@ -68,14 +68,6 @@ In particolare vengono gestiti:
 - **Esistenza dei file** (per userlist e passlist)
 - **Prevenzione della confusione tra file e stringhe**, evitando interpretazioni errate
 
-## Requisiti
-
-- Python **3.8+**
-- Modulo necessario:
-
-```bash
-pip install asyncssh
-```
 ## Esempi di utilizzo
 
 ### • Username singolo + passlist
@@ -105,6 +97,15 @@ python3 brutus.py -i 192.168.1.10 -U u.txt -P p.txt --dont-stop
 - `-P, --passlist` → File contenente lista di password  
 - `--dont-stop` → Non interrompe l’attacco se vengono trovate credenziali valide
 ```
+## Requisiti
+
+- Python **3.8+**
+- Modulo necessario:
+
+```bash
+pip install asyncssh
+```
+
 > ⚠️ **Attenzione**  
 > L’utilizzo di questo tool è consentito esclusivamente su sistemi per cui si dispone di esplicita autorizzazione.  
 > L’autore non è responsabile per eventuali usi impropri o illegali.
