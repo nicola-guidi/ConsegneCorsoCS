@@ -30,7 +30,7 @@ In questo task ci spostiamo nella cartella World/Castle/Cellar ed eliminiamo tut
 ![mission1](./Media/mission5.png)
 
 ### Mission 6
-Ci spostiamo nella cartella Garden e muoviamo con il comando `mv` tutti i file coin_* nella cartella Garden/Hut/Chest.
+Ci spostiamo nella cartella Garden e muoviamo con il comando `mv` tutti i file coin_* nella cartella Forest/Hut/Chest.
 
 ![mission1](./Media/mission6.png)
 
