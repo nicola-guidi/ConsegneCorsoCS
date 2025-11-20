@@ -1,8 +1,4 @@
-# GameShell - Guida Completa alle 44 Missioni
-
-## Introduzione
-
-GameShell è un gioco educativo per imparare i comandi Linux attraverso missioni interattive. Questo documento riporta le soluzioni e gli apprendimenti delle 44 missioni completate.
+# GameShell - Guida alle 44 Missioni
 
 ### Mission 1
 Qui si tratta semplicemente di entrare nella cartella Castle/Main_tower fino a raggiungere l'ultima sottocartella Top_of_the_tower.
@@ -225,7 +221,3 @@ Adesso dobbiamo fare la stessa cosa ma capire quanti oggetti non sono ancora sta
 In questa ultima missione dobbiamo decifrare il messaggio di Merlino. È criptato con un Caesar cipher e dobbiamo capire il numero di ROT. Siamo riusciti a decifrare il messaggio con il comando `cat ~/Castle/Main_building/Library/Merlin_s_office/Drawer/secret_message | tr "a-z" "o-za-n"`. Questo ci rivelerà la chiave per il forziere di Merlino e concluderà il gioco.
 
 ![mission1](./Media/mission44.png)
-
-## Conclusioni
-
-GameShell è uno strumento eccellente per apprendere i fondamenti della shell Linux in modo interattivo. Le 44 missioni coprono progressivamente i concetti essenziali dalla navigazione base fino alla gestione avanzata di processi, manipolazione di testi e crittografia.
