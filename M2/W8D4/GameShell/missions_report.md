@@ -40,7 +40,7 @@ Stessa missione di prima ma in questo caso i file "coin" sono file nascosti. Per
 ![mission1](./Media/mission7.png)
 
 ### Mission 8
-Qui possiamo rimuovere tutti i file richiesti dalla cartella Castle/Cellar utilizzando il comando `rm *spider*`. In questo modo elimineremo i file che avranno la parola spider al centro del nome del file.
+Qui possiamo rimuovere tutti i file richiesti dalla cartella Castle/Cellar utilizzando il comando `rm *spider*`. In questo modo elimineremo i file che avranno la parola "spider" al centro del nome del file.
 
 ![mission1](./Media/mission8.png)
 
