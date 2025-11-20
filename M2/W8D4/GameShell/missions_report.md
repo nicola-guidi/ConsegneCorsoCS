@@ -35,7 +35,7 @@ Ci spostiamo nella cartella Garden e muoviamo con il comando `mv` tutti i file c
 ![mission1](./Media/mission6.png)
 
 ### Mission 7
-Stessa missione di prima ma in questo caso i coin fanno riferimento a file nascosti. Per vederli si deve utilizzare il comando `ls -la` all'interno della cartella Garden.
+Stessa missione di prima ma in questo caso i file "coin" sono file nascosti. Per poterli listare si deve utilizzare il comando `ls -la` all'interno della cartella Garden.
 
 ![mission1](./Media/mission7.png)
 
