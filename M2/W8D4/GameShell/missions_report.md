@@ -141,9 +141,7 @@ Per riuscire a mostrare soltanto le 16 righe della ricetta richiesta dal task do
 ![mission1](./Media/mission27.png)
 
 ### Mission 28
-In questo esercizio dovremo stampare esclusivamente le tre righe della ricetta richiesta che si trovano al centro del file. Dovremo usare una combinazione di `head` (per settare il limite superiore delle righe che vogliamo mostrare) insieme a `tail` per eliminare dall'output le righe iniziali che non ci servono. Il comando sarà quindi `head -n 6 Book_of_potions/page_13 | tail -n 3`.
-
-**Spiegazione**: `head -n 6` prende le prime 6 righe del file, poi `tail -n 3` estrae le ultime 3 di queste 6 righe, ottenendo così le righe 4, 5 e 6 del file originale.
+In questo esercizio dovremo stampare esclusivamente le tre righe della ricetta richiesta che si trovano al centro del file. Dovremo usare una combinazione di `head` (per settare il limite superiore delle righe che vogliamo mostrare) insieme a `tail` per eliminare dall'output le righe iniziali che non ci servono. Il comando sarà quindi `head -n 6 Book_of_potions/page_13 | tail -n 3`. `head -n 6` prende le prime 6 righe del file, poi `tail -n 3` estrae le ultime 3 di queste 6 righe, ottenendo così le righe 4, 5 e 6 del file originale.
 
 ![mission1](./Media/mission28.png)
 
