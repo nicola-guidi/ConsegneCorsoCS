@@ -15,7 +15,7 @@ Qui lo scopo della missione è quello di tornare indietro fino alla directory Ca
 ![mission1](./Media/mission2.png)
 
 ### Mission 3
-Qui si torna nella directory iniziale con il comando `cd`, dopo di che ci si sposta utilizzando il path assoluto Castle/Main_building/Throne_room.
+Qui si torna nella directory iniziale con il comando `cd`, dopo di che ci si sposta specificando il path assoluto con il comando `cd Castle/Main_building/Throne_room`.
 
 ![mission1](./Media/mission3.png)
 
@@ -25,7 +25,7 @@ In questo task ci spostiamo nella cartella World/Forest e creiamo una cartella c
 ![mission1](./Media/mission4.png)
 
 ### Mission 5
-In questo task ci spostiamo nella cartella World/Castle/Cellar ed eliminiamo tutti i file che iniziano con la parola spider.
+In questo task ci spostiamo nella cartella World/Castle/Cellar ed eliminiamo tutti i file che iniziano con la parola "spider".
 
 ![mission1](./Media/mission5.png)
 
