@@ -351,6 +351,8 @@ root@bsides2018:~# whoami
 root
 ```
 
+![Testo alternativo](IMG/9_anne_access_and_privesc.png)
+
 **Impatto:** CRITICAL  
 L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'escalation immediata a root.
 
@@ -373,8 +375,11 @@ L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'es
 
 **Strumento:** Nessus Professional  
 **Scan Type:** Credentialed Scan  
-**Credentials Used:** anne:princess (with sudo privileges)  
+**Credentials Used:** anne:princess  
 **Duration:** ~7 minutes
+
+![Testo alternativo](IMG/10.1_nessus_credentialed_scan_1.png)
+![Testo alternativo](IMG/10_nessu_credentialed_scan_2.png)
 
 **Critical Vulnerabilities Discovered:**
 
