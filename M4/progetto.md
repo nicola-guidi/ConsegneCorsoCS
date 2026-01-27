@@ -4,7 +4,6 @@
 **Tipo di Test:** Penetration Test Black Box  
 **Tester:** Nicola Guidi  
 **Data:** 27 Gennaio 2026  
-**Stato:** CONFIDENZIALE
 
 ---
 
@@ -28,50 +27,26 @@ Entrambi i percorsi hanno portato ad **ACCESSO ROOT COMPLETO**. Il sistema prese
 
 ---
 
-## Metodologia
-
-Il test è stato condotto seguendo una metodologia black box standard:
-
-1. **Ricognizione e Scoperta Host**
-2. **Vulnerability Assessment** (scansioni non autenticate)
-3. **Enumerazione Servizi**
-4. **Exploitation**
-5. **Post-Exploitation e Privilege Escalation**
-6. **Vulnerability Assessment Autenticato**
-
----
-
-## Ambito del Test
+## Scope del Test
 
 **Sistemi Target:**
 - 192.168.50.9 (Linux Ubuntu 12.04 LTS)
 
 **Sistemi Esclusi:**
-- Nessuno
-
----
-
-## Riepilogo Vulnerabilità
-
-| Gravità | Conteggio | Descrizione |
-|---------|-----------|-------------|
-| **CRITICA** | 5 | OS End of Life, Bash RCE (Shellshock), Accesso Admin WordPress, RCE Theme Editor, Cron Job World-Writable |
-| **ALTA** | 2 | Credenziali WordPress Deboli, Accesso FTP Anonimo |
-| **MEDIA** | 4 | Apache, MySQL, SSH - Problematiche Multiple |
-| **BASSA** | 1 | ICMP Timestamp Disclosure |
-| **INFO** | Multiple | Rilevamento servizi, port scanner rilevati |
+- n/d
 
 ---
 
 ## Percorso di Attacco Dettagliato
 
-### Fase 1: Ricognizione e Scoperta Host
+### Fase 1: Ricognizione e Scoperta Host - ARP Scan
 
-**Strumento:** netdiscover / scansione ARP  
+**Strumento:** netdiscover
 **Comando:**
 ```bash
 sudo netdiscover
 ```
+
 ![Testo alternativo](IMG/1_host_discovery.png)
 
 **Risultati:**
