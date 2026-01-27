@@ -7,6 +7,38 @@
 
 ---
 
+## Disclaimer
+
+Questo report rappresenta una **fotografia puntuale dello stato di sicurezza** del sistema target alla data del test. Le vulnerabilità identificate e documentate sono il risultato dell'analisi condotta nel periodo di tempo stabilito e con la metodologia concordata.
+
+**Limitazioni del Test:**
+
+- Il penetration test non garantisce l'identificazione di **tutte** le vulnerabilità presenti nel sistema
+- Nuove vulnerabilità potrebbero emergere in qualsiasi momento a seguito di:
+  - Modifiche alla configurazione del sistema
+  - Installazione di nuovi software o aggiornamenti
+  - Pubblicazione di nuove CVE (Common Vulnerabilities and Exposures)
+  - Cambiamenti nell'infrastruttura di rete
+- I risultati sono validi **esclusivamente** per il momento dell'esecuzione del test
+- Vulnerabilità non rilevate potrebbero esistere ma non essere state scoperte a causa di:
+  - Vincoli temporali del test
+  - Limitazioni metodologiche
+  - Complessità del sistema target
+  - Configurazioni specifiche non testate
+
+**Responsabilità:**
+
+Questo documento è fornito "così com'è" e non costituisce una garanzia assoluta di sicurezza. Il cliente rimane responsabile per:
+
+- L'implementazione tempestiva delle remediation raccomandate
+- Il monitoraggio continuo della sicurezza del sistema
+- L'esecuzione di test periodici per identificare nuove vulnerabilità
+- Il mantenimento di un programma di sicurezza completo e aggiornato
+
+Si raccomanda di considerare questo penetration test come parte di un **programma di sicurezza continuativo** e non come un'attività una tantum.
+
+---
+
 ## Sommario Esecutivo
 
 Durante il penetration test black box condotto sul sistema target 192.168.50.9, sono state identificate **vulnerabilità critiche** che hanno permesso la completa compromissione del sistema attraverso **due percorsi di attacco distinti**:
