@@ -55,7 +55,6 @@ sudo netdiscover
 - **Indirizzo MAC:** 08:00:27:f3:f2:8b
 - **Vendor:** PCS Systemtechnik GmbH (VirtualBox)
 
-**Analisi:**  
 La scansione ARP ha identificato con successo il target nel range di rete specificato.
 
 ---
@@ -66,6 +65,7 @@ La scansione ARP ha identificato con successo il target nel range di rete specif
 **Tipo di Scansione:** Basic Network Scan (Non Autenticata)  
 
 ![Testo alternativo](IMG/2.1_nessu_uncredentialed_scan_1.png)
+
 ![Testo alternativo](IMG/2_nessu_uncredentialed_scan_2.png)
 
 **Vulnerabilità Rilevate:**
