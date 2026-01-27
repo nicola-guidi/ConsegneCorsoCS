@@ -2,7 +2,7 @@
 
 **Target:** 192.168.50.9  
 **Tipo di Test:** Penetration Test Black Box  
-**Tester:** [Nome del Tester]  
+**Tester:** Nicola Guidi  
 **Data:** 27 Gennaio 2026  
 **Stato:** CONFIDENZIALE
 
@@ -12,13 +12,13 @@
 
 Durante il penetration test black box condotto sul sistema target 192.168.50.9, sono state identificate **vulnerabilità critiche** che hanno permesso la completa compromissione del sistema attraverso **due percorsi di attacco distinti**:
 
-### Percorso di Attacco 1: Brute Force SSH + Configurazione Sudo Errata
+### Attack Path #1: Brute Force SSH + Sudo Misconfiguration
 1. **Accesso FTP anonimo** con information disclosure (lista utenti)
 2. **Credenziali SSH deboli** individuate tramite brute force (anne:princess)
 3. **Privilege escalation** tramite configurazione sudo non sicura
-4. **Vulnerabilità Shellshock** (CVE-2014-6271) identificata post-compromissione
+4. **Vulnerabilità Shellshock** (CVE-2014-6271) identificata post-compromissione - **non exploitabile**
 
-### Percorso di Attacco 2: Exploitation WordPress + Hijacking Cron Job
+### Attack Path #2: WordPress Initial Access + Cron Job Exploitation
 1. **Scoperta installazione WordPress** tramite robots.txt
 2. **Brute force credenziali WordPress** (john:enigma)
 3. **Iniezione PHP Reverse Shell** tramite Theme Editor
@@ -46,9 +46,6 @@ Il test è stato condotto seguendo una metodologia black box standard:
 **Sistemi Target:**
 - 192.168.50.9 (Linux Ubuntu 12.04 LTS)
 
-**Range IP Scansionato:**
-- 192.168.0.0/16
-
 **Sistemi Esclusi:**
 - Nessuno
 
@@ -73,14 +70,13 @@ Il test è stato condotto seguendo una metodologia black box standard:
 **Strumento:** netdiscover / scansione ARP  
 **Comando:**
 ```bash
-netdiscover -r 192.168.0.0/16
+sudo netdiscover
 ```
 
 **Risultati:**
 - **Target Identificato:** 192.168.50.9
 - **Indirizzo MAC:** 08:00:27:f3:f2:8b
 - **Vendor:** PCS Systemtechnik GmbH (VirtualBox)
-- **Host Totali:** 14 host scoperti nella rete
 
 **Analisi:**  
 La scansione ARP ha identificato con successo il target nel range di rete specificato.
@@ -89,7 +85,7 @@ La scansione ARP ha identificato con successo il target nel range di rete specif
 
 ### Fase 2: Vulnerability Assessment Iniziale (Non Autenticato)
 
-**Strumento:** Nessus Professional  
+**Strumento:** Nessus Essentials  
 **Tipo di Scansione:** Basic Network Scan (Non Autenticata)  
 **Durata:** ~8 minuti
 
@@ -108,16 +104,6 @@ La scansione ARP ha identificato con successo il target nel range di rete specif
 - **SSH** (Problematiche Multiple) - 6 vulnerabilità (categoria Misc)
 - **Canonical Ubuntu Linux** (Problematiche Multiple) - 58 controlli di sicurezza locali
 
-#### BASSA:
-- **ICMP Timestamp Request Remote Date Disclosure** (CVSS 2.1)
-  - Permette di determinare l'ora del sistema target
-
-#### INFO:
-- Rilevamento Servizio HTTP - 3 problematiche
-- Rilevamento Servizio SSH - 9 problematiche
-- Netstat Portscanner (SSH) - 7 rilevamenti
-- Rilevamento Servizi - 3 rilevamenti
-
 ---
 
 ### Fase 3: Enumerazione Servizi di Rete
@@ -125,7 +111,7 @@ La scansione ARP ha identificato con successo il target nel range di rete specif
 **Strumento:** Nmap  
 **Comando:**
 ```bash
-nmap -sV -p- --script vuln 192.168.50.9
+sudo nmap -A-p- 192.168.50.9
 ```
 
 **Porte Aperte & Servizi:**
@@ -138,7 +124,7 @@ nmap -sV -p- --script vuln 192.168.50.9
 
 **Risultati Chiave:**
 - **FTP Anonymous Login Allowed** (vsftpd 2.3.5)
-- **HTTP Server:** Apache/2.2.22 - vulnerable, no robots.txt
+- **HTTP Server:** Apache/2.2.22 - robots.txt
 - **SSH Server:** OpenSSH 5.9p1 - versione datata
 
 **Risultati Scansione Vulnerabilità Nmap:**
@@ -158,7 +144,6 @@ nmap -sV -p- --script vuln 192.168.50.9
 ```bash
 ftp 192.168.50.9
 Name: anonymous
-Password: [enter]
 ```
 
 **Risultati:**
