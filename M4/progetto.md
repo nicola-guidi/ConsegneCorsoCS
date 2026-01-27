@@ -87,7 +87,6 @@ La scansione ARP ha identificato con successo il target nel range di rete specif
 ### Fase 3: Enumerazione Servizi di Rete
 
 **Strumento:** Nmap  
-
 **Comando:**
 ```bash
 sudo nmap -A -p- 192.168.50.9
@@ -118,9 +117,7 @@ sudo nmap -A -p- 192.168.50.9
 ### Fase 1: Exploitation - Accesso FTP Anonimo
 
 **Strumento:** FTP Client 
-
 **Vulnerability:** Anonymous FTP Login Enabled  
-
 **Passaggi di Exploitation:**
 
 ```bash
@@ -152,9 +149,7 @@ Information disclosure critico - la lista di utenti validi del sistema è stata 
 ### Fase 2: Attacco Brute Force SSH
 
 **Strumento:** Hydra  
-
 **Target Service:** SSH (port 22)  
-
 **Attack Type:** Dictionary-based brute force
 
 **Tentativo Iniziale (Fallito):**
@@ -185,7 +180,6 @@ Solo l'utente **anne** accetta l'autenticazione tramite password, gli altri uten
 ### Fase 4: Brute Force SSH Riuscito (Utente: anne)
 
 **Strumento:** Hydra
-
 **Comando:**
 ```bash
 hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-passwords.txt 192.168.50.9 ssh
@@ -214,7 +208,6 @@ hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-pass
 ### Fase 5: Accesso Iniziale e Raccolta Informazioni Sistema
 
 **Metodo di Accesso:** SSH  
-
 **Credentials:** anne:princess
 
 ```bash
@@ -232,7 +225,6 @@ anne
 ### Fase 6: Privilege Escalation a Root
 
 **Method:** Sudo misconfiguration  
-
 **Gravità:** CRITICAL
 
 **Discovery:**
@@ -272,16 +264,14 @@ L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'es
 ### Fase 7: Post-Exploitation - Scansione Vulnerabilità Autenticata
 
 **Strumento:** Nessus Essential
-
 **Scan Type:** Credentialed Scan  
-
 **Credentials Used:** anne:princess  
 
 ![Testo alternativo](IMG/10.1_nessus_credentialed_scan_1.png)
 
 ![Testo alternativo](IMG/10_nessu_credentialed_scan_2.png)
 
-**Critical Vulnerabilities Discovered:**
+### Critical Vulnerabilities Discovered:
 
 #### CRITICAL - Bash Remote Code Execution (Shellshock) - CVE-2014-6271 - NON EXPLOITABILE
 
@@ -308,7 +298,6 @@ Oltre al primo path di attacco tramite SSH, è stato identificato un **secondo v
 ### Fase 1: Enumerazione Servizi Web - Scoperta robots.txt
 
 **Strumento:** Nmap  
-
 **Comando:**
 ```bash
 nmap -A -p- 192.168.50.9
@@ -331,7 +320,6 @@ Information disclosure che rivela la struttura delle directory e potenziali vett
 ### Fase 2: Scoperta Installazione WordPress
 
 **Metodo di Accesso:** Browser  
-
 **URL:** http://192.168.50.9/backup_wordpress
 
 ![Testo alternativo](IMG/13_wp_installation.png)
@@ -349,7 +337,6 @@ Information disclosure che rivela la struttura delle directory e potenziali vett
 ### Fase 3: Enumerazione Pagina Login WordPress
 
 **Strumento:** Metasploit Framework  
-
 **Module:** `auxiliary/scanner/http/wordpress_login_enum`
 
 ![Testo alternativo](IMG/15_wp_login.png)
@@ -374,11 +361,8 @@ msf auxiliary(scanner/http/wordpress_login_enum) > run
 ### Fase 4: Brute Force Credenziali WordPress
 
 **Strumento:** Metasploit Framework  
-
 **Module:** `auxiliary/scanner/http/wordpress_login_enum`  
-
 **Username:** john 
-
 **Wordlist:** /usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt
 
 **Attack Execution:**
@@ -413,9 +397,7 @@ Matching Modules
 ### Fase 5: Accesso Pannello Admin WordPress
 
 **Metodo di Accesso:** Web Browser
-
 **URL:** http://192.168.50.9/backup_wordpress/wp-login.php 
-
 **Credentials:** john:enigma
 
 ![Testo alternativo](IMG/17_wp_login_php.png)
@@ -440,9 +422,7 @@ Matching Modules
 ### Fase 7: Accesso Theme Editor per Iniezione Codice
 
 **Navigazione:** Appearance → Editor  
-
 **File Target:** Twenty Sixteen: Theme Footer (footer.php)
-
 **Theme Editor:**
 
 ![Testo alternativo](IMG/19_wp_editor.png)
@@ -455,11 +435,8 @@ Iniettare una reverse shell PHP nel file footer.php che verrà eseguito ad ogni 
 ### Fase 8: Iniezione PHP Reverse Shell
 
 **Strumento:** Theme Editor (WordPress Admin Panel) 
-
 **File Target:** footer.php  
-
 **Tipo di Payload:** PHP Reverse Shell
-
 **Injection della Reverse Shell:**
 
 ![Testo alternativo](IMG/20_rev_shell.png)
@@ -479,7 +456,6 @@ Il codice della reverse shell è stato inserito al posto di quello del file foot
 ### Fase 9: Configurazione Listener Netcat
 
 **Strumento:** Netcat  
-
 **Comando:**
 ```bash
 nc -lvnp 4444
@@ -498,9 +474,7 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 ### Fase 10: Connessione Reverse Shell Stabilita
 
 **Trigger:** Navigazione su qualsiasi pagina WordPress  
-
 **URL Utilizzato:** http://192.168.50.9/backup_wordpress/
-
 **Connessione Stabilita:**
 
 ![Testo alternativo](IMG/22_shell_established.png)
@@ -555,7 +529,6 @@ Qualsiasi utente sul sistema (incluso www-data) può modificare questo script e 
 ### Fase 13: Configurazione Listener per Shell Root
 
 **Strumento:** Netcat  
-
 **Comando:**
 ```bash
 nc -lvnp 443
