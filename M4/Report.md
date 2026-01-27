@@ -619,8 +619,6 @@ Completa compromissione del sistema tramite:
 
 ### Valutazione Complessiva del Rischio: CRITICA
 
-**Probabilità:** VERY HIGH
-
 - Sistema esposto con servizi vulnerabili multipli
 - Credenziali deboli su servizi critici (SSH + WordPress)
 - FTP anonimo abilitato con information disclosure
