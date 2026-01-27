@@ -37,7 +37,6 @@ Durante il penetration test black box condotto sul sistema target 192.168.50.9, 
 1. **Accesso FTP anonimo** con information disclosure (lista utenti)
 2. **Credenziali SSH deboli** individuate tramite brute force (anne:princess)
 3. **Privilege escalation** tramite configurazione sudo non sicura
-4. **Vulnerabilità Shellshock** (CVE-2014-6271) identificata post-compromissione - **non exploitabile**
 
 ### Attack Path #2: WordPress Initial Access + Cron Job Exploitation
 
@@ -78,9 +77,8 @@ sudo netdiscover
 - **Indirizzo MAC:** 08:00:27:f3:f2:8b
 - **Vendor:** PCS Systemtechnik GmbH (VirtualBox)
 
-**Analisi:**
-
-La scansione ARP ha identificato con successo il target nel range di rete specificato.
+**Analisi:** 
+- La scansione ARP ha identificato con successo il target nel range di rete specificato.
 
 ---
 
@@ -337,9 +335,8 @@ nmap -A -p- 192.168.50.9
 
 ![Nmap Robots.txt Discovery](IMG/11_nmap_vuln_robots.png)
 
-**Analisi:**
-
-Il file robots.txt rivela la presenza della directory `/backup_wordpress`, indicando un'installazione WordPress backup o di test non adeguatamente protetta.
+**Analisi:** 
+- Il file robots.txt rivela la presenza della directory `/backup_wordpress`, indicando un'installazione WordPress backup o di test non adeguatamente protetta.
 
 **Impatto:** Information disclosure che rivela la struttura delle directory e potenziali vettori di attacco.
 
