@@ -72,6 +72,7 @@ Il test è stato condotto seguendo una metodologia black box standard:
 ```bash
 sudo netdiscover
 ```
+![Testo alternativo](IMG/1_host_discovery.png)
 
 **Risultati:**
 - **Target Identificato:** 192.168.50.9
