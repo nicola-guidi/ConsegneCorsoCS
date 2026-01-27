@@ -26,17 +26,6 @@ Questo report rappresenta una **fotografia puntuale dello stato di sicurezza** d
   - Complessità del sistema target
   - Configurazioni specifiche non testate
 
-**Responsabilità:**
-
-Questo documento è fornito "così com'è" e non costituisce una garanzia assoluta di sicurezza. Il cliente rimane responsabile per:
-
-- L'implementazione tempestiva delle remediation raccomandate
-- Il monitoraggio continuo della sicurezza del sistema
-- L'esecuzione di test periodici per identificare nuove vulnerabilità
-- Il mantenimento di un programma di sicurezza completo e aggiornato
-
-Si raccomanda di considerare questo penetration test come parte di un **programma di sicurezza continuativo** e non come un'attività una tantum.
-
 ---
 
 ## Sommario Esecutivo
