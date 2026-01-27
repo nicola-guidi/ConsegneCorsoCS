@@ -77,8 +77,7 @@ sudo netdiscover
 - **Indirizzo MAC:** 08:00:27:f3:f2:8b
 - **Vendor:** PCS Systemtechnik GmbH (VirtualBox)
 
-**Analisi:** 
-- La scansione ARP ha identificato con successo il target nel range di rete specificato.
+**Analisi:** La scansione ARP ha identificato con successo il target nel range di rete specificato.
 
 ---
 
@@ -335,8 +334,7 @@ nmap -A -p- 192.168.50.9
 
 ![Nmap Robots.txt Discovery](IMG/11_nmap_vuln_robots.png)
 
-**Analisi:** 
-- Il file robots.txt rivela la presenza della directory `/backup_wordpress`, indicando un'installazione WordPress backup o di test non adeguatamente protetta.
+**Analisi:** Il file robots.txt rivela la presenza della directory `/backup_wordpress`, indicando un'installazione WordPress backup o di test non adeguatamente protetta.
 
 **Impatto:** Information disclosure che rivela la struttura delle directory e potenziali vettori di attacco.
 
@@ -536,9 +534,7 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 *  *    * * *   root    /usr/local/bin/cleanup
 ```
 
-**Analisi:**
-- Script eseguito **ogni minuto** come **root**
-- Potenziale vettore per privilege escalation se modificabile
+**Analisi:** Script eseguito **ogni minuto** come **root** e potenziale vettore per privilege escalation
 
 ---
 
