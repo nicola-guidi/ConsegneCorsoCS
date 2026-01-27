@@ -163,9 +163,7 @@ get users.txt.bk
 
 ![Users List](IMG/5_users_txt.png)
 
-**Impatto:**
-
-Information disclosure critico - la lista di utenti validi del sistema è stata esposta tramite FTP anonimo. Questa informazione può essere utilizzata per attacchi di brute force mirati.
+**Impatto:** Information disclosure critico - la lista di utenti validi del sistema è stata esposta tramite FTP anonimo. Questa informazione può essere utilizzata per attacchi di brute force mirati.
 
 **Remediation:**
 - Disabilitare l'accesso FTP anonimo
@@ -282,9 +280,7 @@ root
 
 ![Anne Access and Privilege Escalation](IMG/9_anne_access_and_privesc.png)
 
-**Impatto:** CRITICAL
-
-L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'escalation immediata a root.
+**Impatto:** L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'escalation immediata a root.
 
 **Remediation:**
 - Rimuovere i privilegi sudo dall'utente anne o limitarli a comandi specifici
@@ -345,9 +341,7 @@ nmap -A -p- 192.168.50.9
 
 Il file robots.txt rivela la presenza della directory `/backup_wordpress`, indicando un'installazione WordPress backup o di test non adeguatamente protetta.
 
-**Impatto:** MEDIUM
-
-Information disclosure che rivela la struttura delle directory e potenziali vettori di attacco.
+**Impatto:** Information disclosure che rivela la struttura delle directory e potenziali vettori di attacco.
 
 ![Robots.txt Content](IMG/12_robots_txt.png)
 
@@ -567,9 +561,7 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 - File eseguito come root ogni minuto via cron
 - Permessi 777 = qualsiasi utente può modificare il file
 
-**Impatto:** CRITICAL
-
-Qualsiasi utente sul sistema (incluso www-data) può modificare questo script e ottenere esecuzione di comandi come root.
+**Impatto:** Qualsiasi utente sul sistema (incluso www-data) può modificare questo script e ottenere esecuzione di comandi come root.
 
 **Piano di Exploitation:**
 1. Modificare `/usr/local/bin/cleanup` per eseguire una reverse shell
