@@ -173,7 +173,7 @@ Solo l'utente **anne** accetta l'autenticazione tramite password, gli altri uten
 
 ### Fase 4: Brute Force SSH Riuscito (Utente: anne)
 
-**Strumento:** Hydra
+**Strumento:** Hydra  
 **Comando:**
 ```bash
 hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-passwords.txt 192.168.50.9 ssh
@@ -257,7 +257,7 @@ L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'es
 
 ### Fase 7: Post-Exploitation - Scansione Vulnerabilità Autenticata
 
-**Strumento:** Nessus Essential
+**Strumento:** Nessus Essential  
 **Scan Type:** Credentialed Scan  
 **Credentials Used:** anne:princess  
 
@@ -356,7 +356,7 @@ msf auxiliary(scanner/http/wordpress_login_enum) > run
 
 **Strumento:** Metasploit Framework  
 **Module:** `auxiliary/scanner/http/wordpress_login_enum`  
-**Username:** john 
+**Username:** john  
 **Wordlist:** /usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt
 
 **Attack Execution:**
@@ -390,8 +390,8 @@ Matching Modules
 
 ### Fase 5: Accesso Pannello Admin WordPress
 
-**Metodo di Accesso:** Web Browser
-**URL:** http://192.168.50.9/backup_wordpress/wp-login.php 
+**Metodo di Accesso:** Web Browser  
+**URL:** http://192.168.50.9/backup_wordpress/wp-login.php  
 **Credentials:** john:enigma
 
 ![Testo alternativo](IMG/17_wp_login_php.png)
@@ -416,7 +416,7 @@ Matching Modules
 ### Fase 7: Accesso Theme Editor per Iniezione Codice
 
 **Navigazione:** Appearance → Editor  
-**File Target:** Twenty Sixteen: Theme Footer (footer.php)
+**File Target:** Twenty Sixteen: Theme Footer (footer.php)  
 **Theme Editor:**
 
 ![Testo alternativo](IMG/19_wp_editor.png)
@@ -428,9 +428,9 @@ Iniettare una reverse shell PHP nel file footer.php che verrà eseguito ad ogni 
 
 ### Fase 8: Iniezione PHP Reverse Shell
 
-**Strumento:** Theme Editor (WordPress Admin Panel) 
+**Strumento:** Theme Editor (WordPress Admin Panel)  
 **File Target:** footer.php  
-**Tipo di Payload:** PHP Reverse Shell
+**Tipo di Payload:** PHP Reverse Shell  
 **Injection della Reverse Shell:**
 
 ![Testo alternativo](IMG/20_rev_shell.png)
@@ -468,7 +468,7 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 ### Fase 10: Connessione Reverse Shell Stabilita
 
 **Trigger:** Navigazione su qualsiasi pagina WordPress  
-**URL Utilizzato:** http://192.168.50.9/backup_wordpress/
+**URL Utilizzato:** http://192.168.50.9/backup_wordpress/  
 **Connessione Stabilita:**
 
 ![Testo alternativo](IMG/22_shell_established.png)
