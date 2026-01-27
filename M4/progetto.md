@@ -72,22 +72,22 @@ La scansione ARP ha identificato con successo il target nel range di rete specif
 
 #### CRITICA - Canonical Ubuntu Linux End of Life (12.04.x)
 - **CVSS:** 10.0
-- **Plugin ID:** N/A
 - **Descrizione:** Il sistema operativo Ubuntu 12.04 LTS ha raggiunto l'end of life e non riceve più aggiornamenti di sicurezza
 - **Impatto:** Vulnerabilità note non patchate, esposizione ad exploit pubblici
-- **Remediation:** Upgrade immediato a una versione supportata di Ubuntu (24.04 LTS)
+- **Remediation:** Upgrade a una versione supportata di Ubuntu (24.04 LTS)
 
 #### Problematiche di Gravità Mista:
 - **Apache HTTP Server** (Problematiche Multiple) - 3 vulnerabilità
 - **Oracle MySQL** (Problematiche Multiple) - 5 vulnerabilità  
-- **SSH** (Problematiche Multiple) - 6 vulnerabilità (categoria Misc)
-- **Canonical Ubuntu Linux** (Problematiche Multiple) - 58 controlli di sicurezza locali
+- **SSH** (Problematiche Multiple) - 6 vulnerabilità
+- **Canonical Ubuntu Linux** (Problematiche Multiple)
 
 ---
 
 ### Fase 3: Enumerazione Servizi di Rete
 
 **Strumento:** Nmap  
+
 **Comando:**
 ```bash
 sudo nmap -A-p- 192.168.50.9
@@ -100,12 +100,12 @@ sudo nmap -A-p- 192.168.50.9
 | Porta | Protocollo | Servizio | Versione |
 |------|----------|---------|---------|
 | 21 | TCP | FTP | vsftpd 2.3.5 |
-| 22 | TCP | SSH | OpenSSH 5.9p1 Debian 5ubuntu1.10 |
-| 80 | TCP | HTTP | Apache httpd 2.2.22 ((Ubuntu)) |
+| 22 | TCP | SSH | OpenSSH 5.9p1 |
+| 80 | TCP | HTTP | Apache 2.2.22 |
 
 **Risultati Chiave:**
-- **FTP Anonymous Login Allowed** (vsftpd 2.3.5)
-- **HTTP Server:** Apache/2.2.22 - /robots.txt
+- **FTP Anonymous Login Allowed** vsftpd 2.3.5
+- **HTTP Server:** Apache 2.2.22 - /robots.txt
 - **SSH Server:** OpenSSH 5.9p1 - versione datata
 
 **Risultati Scansione Vulnerabilità Nmap:**
@@ -116,7 +116,8 @@ sudo nmap -A-p- 192.168.50.9
 
 ### Fase 4: Exploitation - Accesso FTP Anonimo
 
-**Strumento:** FTP Client  
+**Strumento:** FTP Client 
+
 **Vulnerability:** Anonymous FTP Login Enabled  
 
 **Passaggi di Exploitation:**
@@ -130,20 +131,11 @@ Name: anonymous
 
 **File Scoperti:**
 ```bash
-ftp> cd public
-ftp> ls
--rw-r--r--    1 0        0              31 Mar 03  2018 users.txt.bk
-ftp> get users.txt.bk
+get users.txt.bk
 ```
 
 **Content of users.txt.bk:**
-```
-abatchy
-john
-mai
-anne
-doomguy
-```
+
 ![Testo alternativo](IMG/5_users_txt.png)
 
 **Impatto:**  
