@@ -41,8 +41,8 @@ Entrambi i percorsi hanno portato ad **ACCESSO ROOT COMPLETO**. Il sistema prese
 
 ### Fase 1: Ricognizione e Scoperta Host - ARP Scan
 
-**Strumento:**
-**Comando:**
+strumento
+comando
 ```bash
 sudo netdiscover
 ```
