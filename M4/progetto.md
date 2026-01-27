@@ -37,7 +37,7 @@ Entrambi i percorsi hanno portato ad **ACCESSO ROOT COMPLETO**. Il sistema prese
 
 ---
 
-## Percorso di Attacco #1: SSH Exploitation
+## Information Gathering
 
 ### Fase 1: Ricognizione e Scoperta Host - ARP Scan
 
@@ -113,8 +113,9 @@ sudo nmap -A-p- 192.168.50.9
 - Identificata configurazione FTP non sicura
 
 ---
+## Percorso di Attacco #1: SSH Exploitation
 
-### Fase 4: Exploitation - Accesso FTP Anonimo
+### Fase 1: Exploitation - Accesso FTP Anonimo
 
 **Strumento:** FTP Client 
 
@@ -148,7 +149,7 @@ Information disclosure critico - la lista di utenti validi del sistema è stata 
 
 ---
 
-### Fase 5: Attacco Brute Force SSH
+### Fase 2: Attacco Brute Force SSH
 
 **Strumento:** Hydra  
 
@@ -170,7 +171,7 @@ Alcuni degli utenti della lista non sono abilitati a collegarsi al servizio SSH 
 
 ---
 
-### Fase 6: Test Manuali SSH
+### Fase 3: Test Manuali SSH
 
 **Verifica manuale** degli utenti tramite connessione SSH diretta per verificare la risposta del server.
 
@@ -181,7 +182,7 @@ Solo l'utente **anne** accetta l'autenticazione tramite password, gli altri uten
 
 ---
 
-### Fase 7: Brute Force SSH Riuscito (Utente: anne)
+### Fase 4: Brute Force SSH Riuscito (Utente: anne)
 
 **Strumento:** Hydra
 
@@ -210,7 +211,7 @@ hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-pass
 
 ---
 
-### Fase 8: Accesso Iniziale e Raccolta Informazioni Sistema
+### Fase 5: Accesso Iniziale e Raccolta Informazioni Sistema
 
 **Metodo di Accesso:** SSH  
 
@@ -228,7 +229,7 @@ anne
 
 ---
 
-### Fase 9: Privilege Escalation a Root
+### Fase 6: Privilege Escalation a Root
 
 **Method:** Sudo misconfiguration  
 
@@ -268,7 +269,7 @@ L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'es
 
 ---
 
-### Fase 10: Post-Exploitation - Scansione Vulnerabilità Autenticata
+### Fase 7: Post-Exploitation - Scansione Vulnerabilità Autenticata
 
 **Strumento:** Nessus Essential
 
