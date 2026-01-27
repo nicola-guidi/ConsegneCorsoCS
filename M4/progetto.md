@@ -311,7 +311,7 @@ Oltre al primo path di attacco tramite SSH, è stato identificato un **secondo v
 
 **Comando:**
 ```bash
-nmap -sV -sC 192.168.50.6
+nmap -sV -sC 192.168.50.9
 ```
 
 **Key Finding - HTTP robots.txt:**
