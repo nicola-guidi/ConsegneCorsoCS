@@ -644,7 +644,7 @@ Il sistema presenta **almeno due path completamente indipendenti** per ottenere 
 
 ## Raccomandazioni
 
-### Azioni Immediate (Priorità 1 - 24-48 ore)
+### Azioni Immediate (Priorità 1 - 24/48 ore)
 
 1. **Disabilitare l'accesso FTP anonimo**
 
@@ -658,7 +658,7 @@ Il sistema presenta **almeno due path completamente indipendenti** per ottenere 
 
 6. **Disabilitare WordPress Theme/Plugin Editor**
 
-### Azioni a Breve Termine (Priorità 2 - 1-2 settimane)
+### Azioni a Breve Termine (Priorità 2 - 1/2 settimane)
 
 7. **Aggiornare WordPress all'ultima versione**
 
@@ -666,7 +666,7 @@ Il sistema presenta **almeno due path completamente indipendenti** per ottenere 
 
 9. **Implementare Web Application Firewall (WAF)**
 
-### Azioni a Lungo Termine (Priorità 3 - 1-3 mesi)
+### Azioni a Lungo Termine (Priorità 3 - 1/3 mesi)
 
 10. **Pianificare migrazione a Ubuntu 22.04 LTS**
 
