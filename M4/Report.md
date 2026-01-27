@@ -383,6 +383,9 @@ msf auxiliary(scanner/http/wordpress_login_enum) > run
 [+] /backup_wordpress - WordPress User-Validation - Username: 'john' - is VALID
 ```
 
+**Risultati Chiave:**
+L'utente **john** è un utente valido e potenziale target per un attacco brute-force mirato
+
 ---
 
 ### Fase 4: Brute Force Credenziali WordPress
