@@ -1,7 +1,7 @@
 # Black Box Penetration Test - Report
 
 **Target:** BSides Vancouver: 2018 - 192.168.50.9  
-**Tipo di Test:** Black Box Penetration Test
+**Tipo di Test:** Black Box Penetration Test  
 **Tester:** Nicola Guidi  
 **Data:** 27 Gennaio 2026
 
