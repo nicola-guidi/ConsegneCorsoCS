@@ -695,10 +695,6 @@ Il penetration test ha dimostrato che il sistema target 192.168.50.9 presenta **
 - Script cron world-writable eseguito come root (permessi 777)
 - Privilege escalation immediata sfruttando il cron job
 
-### Nota Finale
-
-Questo penetration test ha identificato **condizioni di sicurezza estremamente critiche**. In un ambiente reale, questo sistema sarebbe stato compromesso in pochi minuti da un attaccante con conoscenze anche basilari.
-
 **Data del Report:** 27 Gennaio 2026  
 **Versione:** 2.0 - FINALE
 
