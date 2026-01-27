@@ -381,7 +381,6 @@ msf auxiliary(scanner/http/wordpress_login_enum) > run
 ```
 [*] /backup_wordpress - WordPress Version 4.5 detected
 [+] /backup_wordpress - WordPress User-Validation - Username: 'john' - is VALID
-
 ```
 
 ---
