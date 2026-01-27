@@ -37,7 +37,7 @@ Entrambi i percorsi hanno portato ad **ACCESSO ROOT COMPLETO**. Il sistema prese
 
 ---
 
-## Percorso di Attacco Dettagliato
+## Percorso di Attacco #1: SSH Exploitation
 
 ### Fase 1: Ricognizione e Scoperta Host - ARP Scan
 
@@ -300,11 +300,11 @@ Il sistema è vulnerabile a Shellshock (CVE-2014-6271), una vulnerabilità criti
 
 ---
 
-## Percorso di Attacco Alternativo #2: Exploitation WordPress
+## Percorso di Attacco #2: WordPress Exploitation
 
 Oltre al primo path di attacco tramite SSH, è stato identificato un **secondo vettore di attacco completamente indipendente** attraverso un'installazione WordPress non sicura presente sullo stesso host.
 
-### Fase 11: Enumerazione Servizi Web - Scoperta robots.txt
+### Fase 1: Enumerazione Servizi Web - Scoperta robots.txt
 
 **Strumento:** Nmap  
 
@@ -327,7 +327,7 @@ Information disclosure che rivela la struttura delle directory e potenziali vett
 
 ---
 
-### Fase 12: Scoperta Installazione WordPress
+### Fase 2: Scoperta Installazione WordPress
 
 **Metodo di Accesso:** Browser  
 
@@ -345,7 +345,7 @@ Information disclosure che rivela la struttura delle directory e potenziali vett
 
 ---
 
-### Fase 13: Enumerazione Pagina Login WordPress
+### Fase 3: Enumerazione Pagina Login WordPress
 
 **Strumento:** Metasploit Framework  
 
@@ -370,7 +370,7 @@ msf auxiliary(scanner/http/wordpress_login_enum) > run
 ```
 ---
 
-### Fase 14: Brute Force Credenziali WordPress
+### Fase 4: Brute Force Credenziali WordPress
 
 **Strumento:** Metasploit Framework  
 
@@ -409,7 +409,7 @@ Matching Modules
 
 ---
 
-### Fase 15: Accesso Pannello Admin WordPress
+### Fase 5: Accesso Pannello Admin WordPress
 
 **Metodo di Accesso:** Web Browser
 
@@ -430,13 +430,13 @@ Matching Modules
 
 ---
 
-### Fase 16: Enumerazione Dashboard WordPress
+### Fase 6: Enumerazione Dashboard WordPress
 
 **Critical Finding:** Theme Editor accessible - permette la modifica diretta di file PHP del tema.
 
 ---
 
-### Fase 17: Accesso Theme Editor per Iniezione Codice
+### Fase 7: Accesso Theme Editor per Iniezione Codice
 
 **Navigazione:** Appearance → Editor  
 
@@ -451,7 +451,7 @@ Iniettare una reverse shell PHP nel file footer.php che verrà eseguito ad ogni 
 
 ---
 
-### Fase 18: Iniezione PHP Reverse Shell
+### Fase 8: Iniezione PHP Reverse Shell
 
 **Strumento:** Theme Editor (WordPress Admin Panel) 
 
@@ -475,7 +475,7 @@ Il codice della reverse shell è stato inserito al posto di quello del file foot
 
 ---
 
-### Fase 19: Configurazione Listener Netcat
+### Fase 9: Configurazione Listener Netcat
 
 **Strumento:** Netcat  
 
@@ -494,7 +494,7 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 
 ---
 
-### Fase 20: Connessione Reverse Shell Stabilita
+### Fase 10: Connessione Reverse Shell Stabilita
 
 **Trigger:** Navigazione su qualsiasi pagina WordPress  
 
@@ -506,7 +506,7 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 
 ---
 
-### Fase 21: Enumerazione Post-Exploitation - Scoperta Cron Job
+### Fase 11: Enumerazione Post-Exploitation - Scoperta Cron Job
 
 **Obiettivo:** Privilege escalation from www-data to root
 
@@ -525,7 +525,7 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 
 ---
 
-### Fase 22: Analisi Permessi Script Cron
+### Fase 12: Analisi Permessi Script Cron
 
 **Analisi dello Script:**
 
@@ -551,7 +551,7 @@ Qualsiasi utente sul sistema (incluso www-data) può modificare questo script e 
 
 ---
 
-### Fase 23: Configurazione Listener per Shell Root
+### Fase 13: Configurazione Listener per Shell Root
 
 **Strumento:** Netcat  
 
@@ -561,7 +561,7 @@ nc -lvnp 443
 ```
 ---
 
-### Fase 24: Iniezione Script Malevolo
+### Fase 14: Iniezione Script Malevolo
 
 **Azione:** Modifica del cron script per privilege escalation
 
@@ -586,7 +586,7 @@ Il cron job esegue lo script ogni minuto. Entro 60 secondi, il sistema eseguirà
 
 ---
 
-### Fase 25: Accesso Root Ottenuto
+### Fase 15: Accesso Root Ottenuto
 
 **Connessione Stabilita:**
 
