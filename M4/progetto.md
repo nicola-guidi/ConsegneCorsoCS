@@ -119,11 +119,6 @@ sudo nmap -A -p- 192.168.50.9
 **Vulnerability:** Anonymous FTP Login Enabled   
 **Passaggi di Exploitation:**
 
-```bash
-ftp 192.168.50.9
-Name: anonymous
-```
-
 ![Testo alternativo](IMG/4_ftp_anonymous.png)
 
 **File Scoperti:**
