@@ -160,39 +160,33 @@ hydra -L users.txt.bk -P /usr/share/seclists/Passwords/Common-Credentials/500-wo
 ```
 
 **Errore Riscontrato:**
+
 ![Testo alternativo](IMG/6_hydra_error.png)
 
 **Causa Principale:**  
-Molte configurazioni SSH limitano il numero di tentativi di autenticazione paralleli. È stato necessario ridurre il numero di task paralleli.
+Alcuni degli utenti della lista non sono abilitati a collegarsi al servizio SSH utilizzando la password come metodo di autenticazione
 
 ---
 
 ### Fase 6: Test Manuali SSH
 
-**Manual verification** degli utenti tramite connessione SSH diretta per verificare la risposta del server.
+**Verifica manuale** degli utenti tramite connessione SSH diretta per verificare la risposta del server.
 
 ![Testo alternativo](IMG/7_ssh_manual_test.png)
 
 **Risultato Chiave:**  
-Solo l'utente **anne** accetta l'autenticazione tramite password, gli altri utenti richiedono autenticazione a chiave pubblica.
+Solo l'utente **anne** accetta l'autenticazione tramite password, gli altri utenti richiedono autenticazione mediante crittografia asimmetrica.
 
 ---
 
 ### Fase 7: Brute Force SSH Riuscito (Utente: anne)
 
 **Strumento:** Hydra (optimized parameters)  
+
 **Comando:**
 ```bash
-hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-passwords.txt \
-192.168.50.9 ssh -t 4 -V -C
+hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-passwords.txt 192.168.50.9 ssh
 ```
-
-**Parametri:**
-- `-l anne`: singolo username
-- `-P`: password wordlist
-- `-t 4`: ridotto a 4 task paralleli per evitare blocking
-- `-V`: verbose mode
-- `-C`: continue mode
 
 **Risultati:**
 
@@ -203,6 +197,7 @@ hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-pass
 - **Password:** princess
 
 **Gravità:** CRITICAL  
+
 **Impatto:** Compromissione completa dell'account utente tramite password debole.
 
 **Remediation:**
@@ -216,25 +211,11 @@ hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-pass
 ### Fase 8: Accesso Iniziale e Raccolta Informazioni Sistema
 
 **Metodo di Accesso:** SSH  
+
 **Credentials:** anne:princess
 
 ```bash
 ssh anne@192.168.50.9
-```
-
-**Informazioni Sistema:**
-```
-Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic i686)
-
-* Documentation:  https://help.ubuntu.com/
-
-382 packages can be updated.
-275 updates are security updates.
-
-New release "14.04.5 LTS" available.
-Run 'do-release-upgrade' to upgrade to it.
-
-Last login: Sun Mar  4 16:14:55 2018 from 192.168.1.68
 ```
 
 **Enumerazione Iniziale:**
@@ -248,6 +229,7 @@ anne
 ### Fase 9: Privilege Escalation a Root
 
 **Method:** Sudo misconfiguration  
+
 **Gravità:** CRITICAL
 
 **Discovery:**
@@ -277,11 +259,6 @@ root
 **Impatto:** CRITICAL  
 L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'escalation immediata a root.
 
-**Vulnerability Details:**
-- **Utente Vulnerabile:** anne
-- **Sudo Configuration:** (ALL : ALL) ALL
-- **Impatto:** Compromissione completa del sistema
-
 **Remediation:**
 - Rimuovere i privilegi sudo dall'utente anne o limitarli a comandi specifici
 - Utilizzare sudoers con restrizioni granulari
@@ -291,20 +268,19 @@ L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'es
 
 ### Fase 10: Post-Exploitation - Scansione Vulnerabilità Autenticata
 
-**Strumento:** Nessus Professional  
+**Strumento:** Nessus Essential
+
 **Scan Type:** Credentialed Scan  
+
 **Credentials Used:** anne:princess  
 
 ![Testo alternativo](IMG/10.1_nessus_credentialed_scan_1.png)
+
 ![Testo alternativo](IMG/10_nessu_credentialed_scan_2.png)
 
 **Critical Vulnerabilities Discovered:**
 
 #### CRITICAL - Bash Remote Code Execution (Shellshock) - CVE-2014-6271 - NON EXPLOITABILE
-- **CVSS:** 10.0
-- **CVSS Vector:** CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H
-- **Plugin ID:** Bash Shellshock Detection
-- **Family:** Gain a shell remotely
 
 **Descrizione:**  
 Il sistema è vulnerabile a Shellshock (CVE-2014-6271), una vulnerabilità critica in GNU Bash che permette l'esecuzione di codice arbitrario da remoto. Questa vulnerabilità è stata scoperta nel 2014 e colpisce versioni di Bash anteriori alla patch.
@@ -330,6 +306,7 @@ Oltre al primo path di attacco tramite SSH, è stato identificato un **secondo v
 ### Fase 11: Enumerazione Servizi Web - Scoperta robots.txt
 
 **Strumento:** Nmap  
+
 **Comando:**
 ```bash
 nmap -sV -sC 192.168.50.6
@@ -352,6 +329,7 @@ Information disclosure che rivela la struttura delle directory e potenziali vett
 ### Fase 12: Scoperta Installazione WordPress
 
 **Metodo di Accesso:** Browser  
+
 **URL:** http://192.168.50.9/backup_wordpress
 
 ![Testo alternativo](IMG/13_wp_installation.png)
@@ -362,13 +340,14 @@ Information disclosure che rivela la struttura delle directory e potenziali vett
 - WordPress installation attiva ma "deprecated"
 - Username valido identificato: **john**
 - Possibile target per brute force attack
-- WordPress versione 4.5 (rilevata successivamente)
+- WordPress versione 4.5 (obsoleta)
 
 ---
 
 ### Fase 13: Enumerazione Pagina Login WordPress
 
 **Strumento:** Metasploit Framework  
+
 **Module:** `auxiliary/scanner/http/wordpress_login_enum`
 
 ![Testo alternativo](IMG/15_wp_login.png)
@@ -382,7 +361,6 @@ msf auxiliary(scanner/http/wordpress_login_enum) > set PASS_FILE /usr/share/secl
 msf auxiliary(scanner/http/wordpress_login_enum) > run
 ```
 
-
 **Detection Results:**
 ```
 [*] /backup_wordpress - WordPress Version 4.5 detected
@@ -394,8 +372,11 @@ msf auxiliary(scanner/http/wordpress_login_enum) > run
 ### Fase 14: Brute Force Credenziali WordPress
 
 **Strumento:** Metasploit Framework  
+
 **Module:** `auxiliary/scanner/http/wordpress_login_enum`  
-**Username:** john (identificato dalla fase precedente)  
+
+**Username:** john 
+
 **Wordlist:** /usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt
 
 **Attack Execution:**
@@ -413,17 +394,15 @@ Matching Modules
 **Credenziali Ottenute:**
 - **Username:** john
 - **Password:** enigma
-- **Access Level:** WordPress Administrator
-
-
 
 **Gravità:** CRITICAL  
+
 **Impatto:** Accesso amministrativo completo al pannello WordPress, permettendo l'esecuzione di codice arbitrario.
 
 **Analisi della Vulnerabilità:**
 - Password debole (presente in common wordlist)
 - Nessun rate limiting sui tentativi di login
-- Nessuna protezione contro brute force (no fail2ban, no CAPTCHA)
+- Nessuna protezione contro brute force
 - Account amministratore con credenziali banali
 
 ---
