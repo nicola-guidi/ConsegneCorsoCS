@@ -77,7 +77,8 @@ sudo netdiscover
 - **Indirizzo MAC:** 08:00:27:f3:f2:8b
 - **Vendor:** PCS Systemtechnik GmbH (VirtualBox)
 
-**Analisi:** La scansione ARP ha identificato con successo il target nel range di rete specificato.
+**Analisi:** 
+- La scansione ARP ha identificato con successo il target nel range di rete specificato.
 
 ---
 
@@ -120,20 +121,12 @@ sudo nmap -A -p- 192.168.50.9
 
 ![Nmap Vulnerability Scan](IMG/3_nmap_vuln.png)
 
-**Porte Aperte & Servizi:**
-
-| Porta | Protocollo | Servizio | Versione |
-|-------|------------|----------|----------|
-| 21 | TCP | FTP | vsftpd 2.3.5 |
-| 22 | TCP | SSH | OpenSSH 5.9p1 |
-| 80 | TCP | HTTP | Apache 2.2.22 |
-
-**Risultati Chiave:**
+**Risultati:**
 - **FTP Anonymous Login Allowed** vsftpd 2.3.5
 - **HTTP Server:** Apache 2.2.22 - /robots.txt
 - **SSH Server:** OpenSSH 5.9p1 - versione datata
 
-**Risultati Scansione Vulnerabilità Nmap:**
+**Analisi:**
 - Confermate le vulnerabilità rilevate da Nessus
 - Identificata configurazione FTP non sicura
 
@@ -145,18 +138,14 @@ sudo nmap -A -p- 192.168.50.9
 
 **Strumento:** FTP Client
 
-**Vulnerabilità:** Anonymous FTP Login Enabled
-
-**Passaggi di Exploitation:**
+**Processo di Exploitation:**
 
 ![FTP Anonymous Access](IMG/4_ftp_anonymous.png)
 
-**File Scoperti:**
-```bash
-get users.txt.bk
-```
+**Risultati:**
+- File di backup con utenti **users.txt.bk** accessibile senza autenticazione
 
-**Contenuto di users.txt.bk:**
+**Analisi:**
 
 ![Users List](IMG/5_users_txt.png)
 
@@ -171,24 +160,19 @@ get users.txt.bk
 
 ### Fase 2: Attacco Brute Force SSH
 
-**Strumento:** Hydra
+**Strumento:** Hydra  
 
-**Target Service:** SSH (port 22)
-
-**Attack Type:** Dictionary-based brute force
-
-**Tentativo Iniziale (Fallito):**
+**Comando:**
 ```bash
 hydra -L users.txt.bk -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-passwords.txt 192.168.50.9 ssh
 ```
 
-**Errore Riscontrato:**
+**Risultati:**
 
 ![Hydra Error](IMG/6_hydra_error.png)
 
-**Causa Principale:**
-
-Alcuni degli utenti della lista non sono abilitati a collegarsi al servizio SSH utilizzando la password come metodo di autenticazione
+**Analisi:**
+- ERRORE! Alcuni degli utenti della lista non sono abilitati a collegarsi al servizio SSH utilizzando la password come metodo di autenticazione
 
 ---
 
@@ -198,9 +182,8 @@ Alcuni degli utenti della lista non sono abilitati a collegarsi al servizio SSH 
 
 ![SSH Manual Test](IMG/7_ssh_manual_test.png)
 
-**Risultato Chiave:**
-
-Solo l'utente **anne** accetta l'autenticazione tramite password, gli altri utenti richiedono autenticazione mediante crittografia asimmetrica.
+**Risultati:**
+- Solo l'utente **anne** accetta l'autenticazione tramite password, gli altri utenti richiedono autenticazione mediante crittografia asimmetrica
 
 ---
 
@@ -233,15 +216,15 @@ hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-pass
 
 ### Fase 5: Accesso Iniziale e Raccolta Informazioni Sistema
 
-**Metodo di Accesso:** SSH
+**Strumento:** SSH Client
 
-**Credenziali:** anne:princess
+**Comando:**
 
 ```bash
 ssh anne@192.168.50.9
 ```
 
-**Enumerazione Iniziale:**
+**Risultati:**
 ```bash
 anne@bsides2018:~$ whoami
 anne
