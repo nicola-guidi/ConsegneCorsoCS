@@ -115,8 +115,8 @@ sudo nmap -A -p- 192.168.50.9
 
 ### Fase 1: Exploitation - Accesso FTP Anonimo
 
-**Strumento:** FTP Client 
-**Vulnerability:** Anonymous FTP Login Enabled  
+**Strumento:** FTP Client  
+**Vulnerability:** Anonymous FTP Login Enabled   
 **Passaggi di Exploitation:**
 
 ```bash
