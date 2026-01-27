@@ -380,8 +380,8 @@ msf auxiliary(scanner/http/wordpress_login_enum) > run
 **Risultati della Detection:**
 ```
 [*] /backup_wordpress - WordPress Version 4.5 detected
-[*] 192.168.50.9:80 - /backup_wordpress - WordPress User Enumeration - Running User Enumeration
-[*] 192.168.50.9:80 - /backup_wordpress - WordPress User Validation - Running User Validation
+[+] /backup_wordpress - WordPress User-Validation - Username: 'john' - is VALID
+
 ```
 
 ---
