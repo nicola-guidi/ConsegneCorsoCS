@@ -205,8 +205,6 @@ hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-pass
 - **Username:** anne
 - **Password:** princess
 
-**Gravità:** CRITICAL
-
 **Impatto:** Compromissione completa dell'account utente tramite password debole.
 
 **Remediation:**
@@ -238,8 +236,6 @@ anne
 ### Fase 6: Privilege Escalation a Root
 
 **Metodo:** Sudo misconfiguration
-
-**Gravità:** CRITICAL
 
 **Discovery:**
 ```bash
@@ -407,8 +403,6 @@ Matching Modules
 - **Username:** john
 - **Password:** enigma
 
-**Gravità:** CRITICAL
-
 **Impatto:** Accesso amministrativo completo al pannello WordPress, permettendo l'esecuzione di codice arbitrario.
 
 **Analisi della Vulnerabilità:**
@@ -480,8 +474,6 @@ Iniettare una reverse shell PHP nel file footer.php che verrà eseguito ad ogni 
 - **Shell Type:** /bin/sh interactive shell
 
 Il codice della reverse shell è stato inserito al posto di quello del file footer.php, garantendo l'esecuzione automatica ogni volta che la pagina principale del sito viene caricata.
-
-**Gravità:** CRITICAL
 
 **Impatto:** Remote Code Execution (RCE) come utente www-data sul server web.
 
