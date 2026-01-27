@@ -90,7 +90,7 @@ La scansione ARP ha identificato con successo il target nel range di rete specif
 
 **Comando:**
 ```bash
-sudo nmap -A-p- 192.168.50.9
+sudo nmap -A -p- 192.168.50.9
 ```
 
 ![Testo alternativo](IMG/3_nmap_vuln.png)
@@ -311,7 +311,7 @@ Oltre al primo path di attacco tramite SSH, è stato identificato un **secondo v
 
 **Comando:**
 ```bash
-nmap -sV -sC 192.168.50.9
+nmap -A -p- 192.168.50.9
 ```
 
 **Key Finding - HTTP robots.txt:**
