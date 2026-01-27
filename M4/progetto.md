@@ -126,6 +126,8 @@ sudo nmap -A-p- 192.168.50.9
 | 22 | TCP | SSH | OpenSSH 5.9p1 Debian 5ubuntu1.10 |
 | 80 | TCP | HTTP | Apache httpd 2.2.22 ((Ubuntu)) |
 
+![Testo alternativo](IMG/3_nmap_vuln.png)
+
 **Risultati Chiave:**
 - **FTP Anonymous Login Allowed** (vsftpd 2.3.5)
 - **HTTP Server:** Apache/2.2.22 - robots.txt
