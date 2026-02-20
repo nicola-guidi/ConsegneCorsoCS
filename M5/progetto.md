@@ -1,9 +1,7 @@
 # Security Assessment Report
 ## Progetto — Analisi delle Minacce e Piano di Risposta
 
----
-
-## Sommario Esecutivo
+## Sommario
 
 Il presente documento riporta i risultati dell'assessment di sicurezza condotto sull'infrastruttura dell'applicazione web di e-commerce. L'analisi ha preso in esame l'architettura di rete esistente, con particolare attenzione alla DMZ esposta su Internet, e ha identificato tre scenari di rischio principali: attacchi applicativi di tipo SQLi e XSS, attacchi volumetrici DDoS con impatto sulla disponibilità del servizio, e infezione da malware con rischio di propagazione laterale alla rete interna.
 
