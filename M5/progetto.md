@@ -1,7 +1,7 @@
 # Security Assessment Report
 ## Progetto — Analisi delle Minacce e Piano di Risposta
 
---
+---
 
 ## Sommario Esecutivo
 
