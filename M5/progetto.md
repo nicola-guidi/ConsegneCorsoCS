@@ -68,11 +68,11 @@ Impatto = 10 × 1.500 €
 Impatto = 15.000 €
 ```
 
-Il valore di **€ 15.000** rappresenta il mancato ricavo diretto imputabile alla non disponibilità del servizio. A questa cifra vanno aggiunti i costi indiretti, tipicamente non quantificabili in modo immediato:
+Il valore di **€ 15.000** rappresenta il mancato ricavo diretto imputabile alla non disponibilità del servizio. A questa cifra vanno aggiunti i costi indiretti, tipicamente non quantificabili in modo diretto:
 
-- **Danno reputazionale**: perdita di fiducia da parte degli utenti che hanno tentato di accedere al servizio senza successo
-- **Costi di risposta all'incidente**: ore uomo del team tecnico impegnate nel mitigare l'attacco
-- **Potenziali penali contrattuali**: in caso di SLA con partner o marketplace
+- **Danno reputazionale**
+- **Costi di risposta all'incidente**
+- **Potenziali penali contrattuali**
 
 ### Azioni preventive contro DDoS
 
@@ -104,7 +104,7 @@ Con il server in quarantena, il team di sicurezza procede all'analisi del malwar
 
 #### Fase 4 — Eradicazione e Ripristino
 
-Una volta conclusa l'analisi forense e raccolte le evidenze, si procede alla bonifica del sistema, al ripristino da backup e al rafforzamento delle difese per prevenire recidive.
+Una volta conclusa l'analisi e raccolte le evidenze, si procede alla bonifica del sistema, al ripristino da backup e al rafforzamento delle difese per prevenire recidive.
 
 ---
 
@@ -114,10 +114,8 @@ Una volta conclusa l'analisi forense e raccolte le evidenze, si procede alla bon
 
 ## Conclusioni e Raccomandazioni
 
-L'analisi ha evidenziato come l'architettura iniziale presenti un rischio significativo legato alla comunicazione diretta tra DMZ e rete interna, che in caso di compromissione del server esporrebbe l'intera infrastruttura a movimenti laterali dell'attaccante. L'impatto economico di un singolo evento DDoS di soli 10 minuti è quantificabile in **€ 15.000 di mancato ricavo diretto**, a cui si aggiungono costi indiretti difficilmente quantificabili.
+L'analisi ha evidenziato come l'architettura iniziale presenti un rischio significativo legato alla comunicazione diretta tra DMZ e rete interna, che in caso di compromissione del server esporrebbe l'intera infrastruttura a movimenti laterali dell'attaccante. 
 
 Le principali raccomandazioni in ordine di priorità sono le seguenti. In prima istanza, si suggerisce di implementare un WAF davanti all'applicazione per mitigare attacchi applicativi di tipo SQLi e XSS. In seconda istanza, si consiglia di valutare l'adozione di una CDN con protezione DDoS per ridurre l'esposizione ad attacchi volumetrici e il relativo impatto economico. Infine, in caso di infezione, si deve dare massima priorità all'isolamento del server infetto in modo da limitare la diffusione del virus verso la rete interna. 
 
----
 
-*Documento prodotto a fini di assessment della sicurezza. Classificazione: Riservato.*
