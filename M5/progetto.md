@@ -1,5 +1,4 @@
-# Security Assessment Report
-## Progetto — Analisi delle Minacce e Piano di Risposta
+# Security Assessment Report 'Analisi delle Minacce e Piano di Risposta
 
 ## Sommario
 
