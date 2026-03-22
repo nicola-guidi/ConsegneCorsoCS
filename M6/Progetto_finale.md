@@ -29,6 +29,8 @@ index=main "Failed password"
 
 **Note:** il campo `reason` distingue tra tentativi su utenti inesistenti (`Invalid user`) e tentativi su utenti validi con password errata (`Valid user, wrong password`). La maggioranza degli eventi riguarda utenti inesistenti, tipico pattern di brute force con wordlist.
 
+![descrizione](./1.png)
+
 ---
 
 ## Query 2 — Sessioni SSH aperte con successo per djohnson
@@ -45,6 +47,8 @@ index=main "Accepted password" "djohnson"
 **Risultati:** 955 eventi
 
 **Note:** l'elevato numero di sessioni accettate per un singolo utente da un unico IP (`10.3.10.46`) suggerisce attività automatizzata o uso continuativo di script di automazione.
+
+![descrizione](./2.png)
 
 ---
 
@@ -72,6 +76,8 @@ index=main "Failed password" "86.212.199.60"
 | testuser | Utente di test |
 
 **Note:** il pattern degli username tentati è caratteristico di un attacco brute force con dizionario. L'IP ha sistematicamente provato account di servizio e account privilegiati.
+
+![descrizione](./3.png)
 
 ---
 
@@ -102,6 +108,8 @@ index=main "Failed password"
 
 **Note:** il volume di tentativi per singolo IP (fino a 948) indica campagne di brute force automatizzate. La distribuzione geografica degli IP suggerisce l'uso di botnet o proxy distribuiti.
 
+![descrizione](./4.png)
+
 ---
 
 ## Query 5 — Internal Server Error (HTTP 500)
@@ -125,6 +133,8 @@ index=main sourcetype=access_combined_wcookie status=500
 | `/oldlink?itemId=...` | Link obsoleto |
 
 **Note:** la presenza di `categoryId=NULL` come causa ricorrente indica un bug applicativo nella gestione dei parametri mancanti. Gli errori su `/oldlink` suggeriscono la presenza di link non aggiornati che puntano a risorse inesistenti.
+
+![descrizione](./5.png)
 
 ---
 
